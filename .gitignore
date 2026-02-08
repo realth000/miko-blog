@@ -1,3 +1,7 @@
+/src/contents
+/src/pages/generated
+!/src/pages/generated/.gitkeep
+
 # Logs
 logs
 *.log
