@@ -14,6 +14,7 @@ interface DocInputInfo {
 
 interface DocConfig {
   title: string,
+  summary: string,
   date: string,
   tags: string[],
   draft: boolean,
@@ -22,6 +23,7 @@ interface DocConfig {
 function isDocConfig(data: unknown): boolean {
   return typeof data === 'object' && data !== null &&
   'title' in data && typeof data.title === 'string' && 
+  'summary' in data && typeof data.summary === 'string' &&
   'date' in data && typeof data.date === 'string' &&
   'tags' in data && Array.isArray(data.tags)  && data.tags.every((ele) => typeof ele === 'string') && 
   'draft' in data && typeof data.draft  === 'boolean'
@@ -131,12 +133,17 @@ for (const doc of docs) {
 
     fs.writeFileSync(path.join(docOutputDir, `${component}.tsx`), outputComponentString)
 
-    const { title, } = config as DocConfig
+    const { title, date, tags, draft, summary, } = config as DocConfig
     dynamicRoutes.push({
       importPath: `@/pages/${component}.tsx`,
       path: doc.dirName,
       title,
       component,
+      doc,
+      date,
+      tags,
+      draft,
+      summary,
     })
   } catch(error) {
     fatal('failed to generate doc:', error)
@@ -157,3 +164,20 @@ const articleDynamicRouteString = articleTemplateRouteString
     },`).join('\n').trim())
 
 fs.writeFileSync(articleDynamicRouteFile, articleDynamicRouteString)
+
+log('generate articles page')
+const articlesTemplateString =fs.readFileSync( './src/pages/ArticlesPage.template.tsx', 'utf8')
+const articlesFile = path.join(docOutputDir, 'ArticlesPage.tsx')
+const articlesPageString = articlesTemplateString
+  .replace('// @@ARTICLE_INFO@@', dynamicRoutes.map(r => `
+    {
+      title: '${r.title}',
+      route: '${r.path}',
+      date: '${r.date}',
+      summary: '${r.summary}',
+      tags: [${r.tags.map((tag) => `'${tag}'`).join(', ')}],
+      draft: ${r.draft ? 'true' : 'false'},
+    }
+  `).join(',\n'))
+
+fs.writeFileSync(articlesFile, articlesPageString)

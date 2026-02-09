@@ -1,8 +1,8 @@
 import AboutPage from '@/pages/AboutPage.tsx'
-import ArticlesPage from '@/pages/ArticlesPage.tsx'
 import HomePage from '@/pages/HomePage.tsx'
 import NotFoundPage from '@/pages/NotFoundPage.tsx'
 import ProjectsPage from '@/pages/ProjectsPage.tsx'
+import ArticlesPage from '@/pages/generated/ArticlesPage.tsx'
 import articleDynamicRoute from '@/pages/generated/article-dynamic-route.ts'
 import type { PageInfo, Routes } from '@/router/routes.tsx'
 
