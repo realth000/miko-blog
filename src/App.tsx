@@ -1,10 +1,9 @@
 import {
-  createContext, createElement, useContext, useEffect, useEffectEvent, useState
+  createContext, createElement, useEffect, useEffectEvent, useState
 } from 'react'
-import viteLogo from '/vite.svg'
-import { purifyUrl } from './utils/encoding.ts'
 import { findRoute, notFondPageTarget } from '@/router/router.ts'
-import reactLogo from '@/assets/react.svg'
+import { purifyUrl } from './utils/encoding.ts'
+
 
 /**
  * The global route context.
@@ -40,7 +39,7 @@ export default function App() {
 
   return (
     <RouteContext value='/'>
-      { renderPage() }
+      {renderPage()}
     </RouteContext>
   )
 }

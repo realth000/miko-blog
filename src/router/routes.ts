@@ -4,7 +4,7 @@ export type Routes = PageInfo[]
 
 export type DynamicRoute = (route: string) => PageInfo | undefined
 
-export type PageInfo = {
+export interface PageInfo {
   /**
    * Unique route path.
    *

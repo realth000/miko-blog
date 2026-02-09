@@ -12,7 +12,7 @@ const articleDynamicRoute: DynamicRoute = (page: string) => {
     }
   }
 
-  return undefined
+  return
 }
 
 export default articleDynamicRoute

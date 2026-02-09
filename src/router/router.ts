@@ -1,10 +1,10 @@
-import type { PageInfo, Routes } from '@/router/routes.tsx'
-import ArticlesPage from '@/pages/ArticlesPage.tsx'
 import AboutPage from '@/pages/AboutPage.tsx'
+import ArticlesPage from '@/pages/ArticlesPage.tsx'
+import HomePage from '@/pages/HomePage.tsx'
 import NotFoundPage from '@/pages/NotFoundPage.tsx'
 import ProjectsPage from '@/pages/ProjectsPage.tsx'
-import HomePage from '@/pages/HomePage.tsx'
 import articleDynamicRoute from '@/pages/generated/article-dynamic-route.ts'
+import type { PageInfo, Routes } from '@/router/routes.tsx'
 
 /**
  * All available routes.
@@ -30,7 +30,7 @@ const appRoutes: Routes = [
     path: '/about',
     title: 'About',
     component: AboutPage,
-  },
+  }
 ]
 
 export const notFondPageTarget: PageInfo = {

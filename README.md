@@ -1,75 +1,82 @@
-# React + TypeScript + Vite
+# miko-blog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Toy level static blog generator.
 
-Currently, two official plugins are available:
+> My first web project.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**This repo is still working in process.**
 
-## React Compiler
+## Features
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+* Articles in `mdx` format by using `@mdx-js`.
+* Support GitHub pages, serve as a single page application.
+* Page and route generation for articles.
+* Intend to be lightweight.
+  * Depdends on `react` + `@mdx-js` + `eslint` + `typescript`.
+  * No third-party dependencies for routing, state management, animation and UI.
 
-Note: This will impact Vite dev & build performances.
+## Prerequisites
 
-## Expanding the ESLint configuration
+* nodejs (>= 24.10.1)
+* pnpm
+* eslint
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Usage
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+For each post, the article file should be named `index.mdx` and paired with a config file `config.json` in a separate folder in `src/contents/`.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Sample document:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```mdx
+export function Thing() {
+  return <>World</>
+}
+
+# Hello <Thing />
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Sample config:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```json
+{
+  "title": "Sample page",
+  "date": "2026-01-01",
+  "tags": [
+    "sample",
+    "mdx",
+    "react"
+  ],
+  "draft": false
+}
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The contents folder looks like:
+
+```console
+./src/contents
+├── sample
+│   ├── config.json
+│   └── index.mdx
+└── sample2
+    ├── config.json
+    └── index.mdx
+```
+
+Run codegen to generate pages and routes for all non-draft articles:
+
+```bash
+# Install dependencies
+pnpm install
+
+# Generate documents pages and routes.
+pnpm gen-doc
+
+# Run
+pnpm dev
+
+# Lint
+pnpm lint
+
+# (Optional) Lint all files, including generated ones.
+pnpm lint:all
 ```
