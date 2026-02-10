@@ -1,5 +1,11 @@
+import ArticleContents from '@/components/ArticleContents.tsx'
 import Scaffold from '@/components/Scaffold.tsx'
+import type { ArticleTableOfContents } from '@/models/article-table-of-contents.tsx'
 // @@DOC_IMPORT_PATH@@
+
+const toc: ArticleTableOfContents = [
+  // @@DOC_TABLE_OF_CONTENTS@@
+]
 
 export default function ArticleTemplatePage() {
   return (
@@ -7,7 +13,7 @@ export default function ArticleTemplatePage() {
       <div>
         {/* @@DOC_CONTENT@@ */}
       </div>
-      {/* <ArticleContents/> */}
+      {toc.length > 1 && <ArticleContents toc={toc}/>}
     </Scaffold>
   )
 }

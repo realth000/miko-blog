@@ -1,7 +1,8 @@
 import {
-  createContext, createElement, useEffect, useEffectEvent, useState
+  createContext, createElement, useEffect, useEffectEvent, useState,
 } from 'react'
 import { findRoute, notFondPageTarget } from '@/router/router.ts'
+import { log } from './log.ts'
 import { purifyUrl } from './utils/encoding.ts'
 
 
@@ -14,6 +15,9 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState('/')
 
   const renderPage = () => {
+    const path = globalThis.location.pathname
+    const hash = globalThis.location.hash.slice(1) || '/'
+    log(`renderPage: path=${path}, hash=${hash}`)
     return createElement((findRoute(currentPage) ?? notFondPageTarget).component)
   }
 
@@ -23,8 +27,8 @@ export default function App() {
    * Use this function to handle routing.
    */
   const onHashChanged = useEffectEvent(() => {
-    const path = purifyUrl(globalThis.location.hash.slice(1)) || '/'
-    setCurrentPage(path)
+    const hash = purifyUrl(globalThis.location.hash.slice(1)) || '/'
+    setCurrentPage(hash)
   })
 
   useEffect(() => {

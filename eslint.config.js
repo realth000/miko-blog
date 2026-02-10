@@ -51,6 +51,8 @@ export default defineConfig([
         },
       ],
       'import/no-cycle': 'error',
+      'import/extensions': ['error', 'always', { ignorePackages: true }],
+
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/indent': ['error', 2],
@@ -59,16 +61,16 @@ export default defineConfig([
       '@stylistic/array-bracket-spacing': ['error', 'never'],
       '@stylistic/block-spacing': ['error', 'always'],
       '@stylistic/comma-dangle': ['error', {
-        'arrays': 'never',
-        'objects': 'always',
-        'imports': 'never',
-        'exports': 'never',
-        'functions': 'never',
-        'importAttributes': 'never',
-        'dynamicImports': 'never',
-        'enums': 'never',
-        'generics': 'never',
-        'tuples': 'never'
+        'arrays': 'always-multiline',
+        'objects': 'always-multiline',
+        'imports': 'always-multiline',
+        'exports': 'always-multiline',
+        'functions': 'only-multiline',
+        'importAttributes': 'always-multiline',
+        'dynamicImports': 'always-multiline',
+        'enums': 'always-multiline',
+        'generics': 'always-multiline',
+        'tuples': 'always-multiline'
       }],
       '@stylistic/jsx-tag-spacing': ['error', {
         'closingSlash': 'never',
@@ -151,6 +153,7 @@ export default defineConfig([
         },
       ],
       'import/no-cycle': 'error',
+      'import/extensions': ['error', 'always', { ignorePackages: true }],
 
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/quotes': ['error', 'single'],
@@ -160,16 +163,16 @@ export default defineConfig([
       '@stylistic/array-bracket-spacing': ['error', 'never'],
       '@stylistic/block-spacing': ['error', 'always'],
       '@stylistic/comma-dangle': ['error', {
-        arrays: 'never',
-        objects: 'always',
-        imports: 'never',
-        exports: 'never',
-        functions: 'never',
-        importAttributes: 'never',
-        dynamicImports: 'never',
-        enums: 'never',
-        generics: 'never',
-        tuples: 'never'
+        'arrays': 'always-multiline',
+        'objects': 'always-multiline',
+        'imports': 'always-multiline',
+        'exports': 'always-multiline',
+        'functions': 'only-multiline',
+        'importAttributes': 'always-multiline',
+        'dynamicImports': 'always-multiline',
+        'enums': 'always-multiline',
+        'generics': 'always-multiline',
+        'tuples': 'always-multiline'
       }],
 
       'react/react-in-jsx-scope': 'off',

@@ -11,7 +11,7 @@ interface ArticleInfo {
 
 function ArticleInfoCard(info: ArticleInfo) {
   return (<div key={info.route}>
-    <a style={{ padding: '8px', border: '1px red solid', }} href= {`#/articles/${info.route}`}>
+    <a style={{ padding: '8px', border: '1px red solid' }} href= {`#/articles/${info.route}`}>
       <h3>{info.title}</h3>
       <div>{info.date}</div>
       <div>{info.summary}</div>

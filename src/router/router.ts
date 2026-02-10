@@ -1,3 +1,4 @@
+import { log } from '@/log.ts'
 import AboutPage from '@/pages/AboutPage.tsx'
 import HomePage from '@/pages/HomePage.tsx'
 import NotFoundPage from '@/pages/NotFoundPage.tsx'
@@ -30,7 +31,7 @@ const appRoutes: Routes = [
     path: '/about',
     title: 'About',
     component: AboutPage,
-  }
+  },
 ]
 
 export const notFondPageTarget: PageInfo = {
@@ -40,6 +41,7 @@ export const notFondPageTarget: PageInfo = {
 }
 
 export function findRoute(route: string): PageInfo | undefined {
+  log('find route:', route)
   return _findRoute(route, appRoutes)
 }
 

@@ -11,7 +11,7 @@ export default defineConfig({
         plugins: [['babel-plugin-react-compiler']],
       },
     }),
-    mdx()
+    mdx(),
   ],
   resolve: {
     alias: {
