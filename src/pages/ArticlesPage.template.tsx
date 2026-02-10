@@ -9,6 +9,18 @@ interface ArticleInfo {
   draft: boolean;
 }
 
+function ArticleInfoCard(info: ArticleInfo) {
+  return (<div key={info.route}>
+    <a style={{ padding: '8px', border: '1px red solid', }} href= {`#/articles/${info.route}`}>
+      <h3>{info.title}</h3>
+      <div>{info.date}</div>
+      <div>{info.summary}</div>
+      <div>{info.tags.join('; ')}</div>
+      <div>{info.draft}</div>
+    </a>
+  </div>)
+}
+
 const articleInfo : ArticleInfo[] =  [
   // @@ARTICLE_INFO@@
 ]
@@ -16,17 +28,7 @@ const articleInfo : ArticleInfo[] =  [
 export default function ArticlesPage() {
   return (
     <Scaffold>
-      {articleInfo.map((info) => (
-        <div key={info.route}>
-          <a style={{ padding: '8px', border: '1px red solid', }} href= {`/articles/${info.route}`}>
-            <h3>{info.title}</h3>
-            <div>{info.date}</div>
-            <div>{info.summary}</div>
-            <div>{info.tags.join('; ')}</div>
-            <div>{info.draft}</div>
-          </a>
-        </div>
-      ))}
+      {articleInfo.map((info) => ArticleInfoCard(info))}
     </Scaffold>
   )
 }

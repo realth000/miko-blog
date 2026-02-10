@@ -8,12 +8,9 @@ const articleDynamicRoute: DynamicRoute = (page: string) => {
 
   for (const articlePage of articlePages) {
     if (articlePage.path === page) {
-      console.log('>>> ARTICLE PAGE MATCHES', page, articlePage)
       return articlePage
     }
   }
-
-  console.log('>>> NOT ARTICLE PAGE MATCHES')
 
   return
 }

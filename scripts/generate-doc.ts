@@ -156,12 +156,11 @@ const articleTemplateRouteString = fs.readFileSync('./src/pages/article-dynamic-
 const articleDynamicRouteFile = path.join(docOutputDir, 'article-dynamic-route.ts')
 const articleDynamicRouteString = articleTemplateRouteString
   .replace('// @@DOC_IMPORT_PATHS@@', dynamicRoutes.map(r => `import ${r.component} from '@/pages/generated/${r.component}.tsx'`).join('\n'))
-  .replace('// @@DOC_PATHS@@', dynamicRoutes.map(r => `
-    {
+  .replace('// @@DOC_PATHS@@', dynamicRoutes.map(r => `{
       path: '${r.path}',
       title: '${r.title}',
       component: ${r.component},
-    },`).join('\n').trim())
+    }`).join(',\n    ').trim())
 
 fs.writeFileSync(articleDynamicRouteFile, articleDynamicRouteString)
 

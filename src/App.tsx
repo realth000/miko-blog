@@ -14,7 +14,6 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState('/')
 
   const renderPage = () => {
-    console.log(`>>> renderPage: ${currentPage}, ${JSON.stringify(findRoute(currentPage))}`)
     return createElement((findRoute(currentPage) ?? notFondPageTarget).component)
   }
 
@@ -25,7 +24,6 @@ export default function App() {
    */
   const onHashChanged = useEffectEvent(() => {
     const path = purifyUrl(globalThis.location.hash.slice(1)) || '/'
-    console.log(`>>> onHashChanged, path is >${path}<`)
     setCurrentPage(path)
   })
 

@@ -67,7 +67,6 @@ function _findRoute(route: string, pageMap: Routes | undefined): PageInfo | unde
     }
 
     if (typeof p.children === 'function') {
-      console.log(`>>> calling dyn route, route=${route}`)
       // Dynamic route.
       return p.children(route.replace(`${p.path}/`, ''))
     }
