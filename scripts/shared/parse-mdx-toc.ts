@@ -7,7 +7,7 @@ export function parseMdxTableOfContent(filePath: string): MdxContentTable {
   // Here we parse html contents in the simplest way: 
   // Assume all contents are those `h*` tags and no escaping in the document.
 
-  const re = /^(?<level>#+) (?<title>.*)$/
+  const re = /^(?<level>#+) (?<title>.*)(\r)?$/
 
   const headers : MdxContentTable = data.split('\n').map(line => {
     const reResult = re.exec(line)
