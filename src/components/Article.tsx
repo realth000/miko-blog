@@ -1,7 +1,9 @@
-export default function Article() {
+import type { ReactNode } from 'react'
+
+export default function Article({ children }: { children?: ReactNode }) {
   return (
     <main className='miko-article'>
-      Article content
+      {children}
     </main>
   )
 }

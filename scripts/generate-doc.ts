@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { escapeSingleQuote } from './shared/escape-string.ts'
 import { log, fatal } from './shared/log.ts'
 import { parseMdxTableOfContent } from './shared/parse-mdx-toc.ts'
 
@@ -115,10 +116,10 @@ for (const [i, doc] of docs.entries()) {
       .replace('// @@DOC_IMPORT_PATH@@', `import Doc from '@/${docPathTrimmed}'`)
       .replace('// @@DOC_TABLE_OF_CONTENTS@@', tableOfContents.map((x) => `{
     level: ${x.level.toString()},
-    title: '${x.title}',
+    title: '${escapeSingleQuote(x.title)}',
   },`).join('\n  ').trim())
       .replace('ArticleTemplatePage', component)
-      .replace(/{\/\* @@DOC_CONTENT@@ \*\/}/, '<Doc/>')
+      .replace(/{\/\* @@DOC_CONTENT@@ \*\/}/, '<Doc components={mdxComponents}/>')
 
     fs.writeFileSync(path.join(docOutputDir, `${component}.tsx`), outputComponentString)
 
@@ -146,7 +147,7 @@ const articleDynamicRouteString = articleTemplateRouteString
   .replace('// @@DOC_IMPORT_PATHS@@', dynamicRoutes.map(r => `import ${r.component} from '@/pages/generated/${r.component}.tsx'`).join('\n'))
   .replace('// @@DOC_PATHS@@', dynamicRoutes.map(r => `{
       path: '${r.path}',
-      title: '${r.title}',
+      title: '${escapeSingleQuote(r.title)}',
       component: ${r.component},
     },`).join('\n    ').trim())
 
@@ -157,7 +158,7 @@ const articlesTemplateString =fs.readFileSync( './src/pages/ArticlesPage.templat
 const articlesFile = path.join(docOutputDir, 'ArticlesPage.tsx')
 const articlesPageString = articlesTemplateString
   .replace('// @@ARTICLE_INFO@@', dynamicRoutes.map(r => `{
-    title: '${r.title}',
+    title: '${escapeSingleQuote(r.title)}',
     route: '${r.path}',
     date: '${r.date}',
     summary: '${r.summary}',

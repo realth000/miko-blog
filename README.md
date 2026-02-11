@@ -80,3 +80,7 @@ pnpm lint
 # (Optional) Lint all files, including generated ones.
 pnpm lint:all
 ```
+
+## Unsupported features
+
+* Frontmatter.
