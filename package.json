@@ -9,8 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint . --ignore-pattern 'src/**/generated/**'",
-    "lint:all": "eslint .",
+    "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "gen-doc": "node ./scripts/generate-doc.ts"
