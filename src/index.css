@@ -1,10 +1,11 @@
+@import 'tailwindcss';
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   color-scheme: dark;
 
   --nav-bar-height: 3rem;
   --nav-bar-safe-area-height: calc(var(--nav-bar-height) + 8px);
-
   --side-bar-width: 12rem;
 
   font-synthesis: none;
@@ -19,7 +20,12 @@
   box-sizing: border-box;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   scroll-margin-top: var(--nav-bar-safe-area-height);
 }
 
@@ -28,44 +34,10 @@ body {
   padding: 0;
 }
 
-.miko-body {
-  display: flex;
-  gap: 1.5rem;
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: var(--nav-bar-safe-area-height) 0.5rem 0 0.5rem;
-}
-
-.miko-nav-bar {
-  position: fixed;
-  z-index: 100;
-  width: 100%;
-  top: 0;
-  color: red;
-  height: var(--nav-bar-height);
-  border: 1px solid;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1rem;
-  box-sizing: border-box;
-}
-
-.miko-nav-bar .links-group {
-  display: flex;
-  gap: 1.2rem;
-  color: green;
-}
-
-.miko-side-bar {
-  position: sticky;
-  width: var(--side-bar-width);
-  top: var(--nav-bar-safe-area-height);
-  align-self: flex-start;
-}
-
-.miko-article {
-  flex: 1;
-  max-width: 48rem;
-  margin: 0 auto;
+/* 自定义主题（可选） */
+@theme {
+  --color-primary: #0066cc;
+  --color-primary-hover: #004499;
+  --max-width-content: 48rem;
+  --max-width-page: 80rem;
 }

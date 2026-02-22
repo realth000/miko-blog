@@ -1,11 +1,11 @@
-import { log } from '@/log.ts'
-import AboutPage from '@/pages/AboutPage.tsx'
-import HomePage from '@/pages/HomePage.tsx'
-import NotFoundPage from '@/pages/NotFoundPage.tsx'
-import ProjectsPage from '@/pages/ProjectsPage.tsx'
-import ArticlesPage from '@/pages/generated/ArticlesPage.tsx'
-import articleDynamicRoute from '@/pages/generated/article-dynamic-route.ts'
-import type { PageInfo, Routes } from '@/router/routes.tsx'
+import { log } from '@/log'
+import AboutPage from '@/pages/AboutPage'
+import HomePage from '@/pages/HomePage'
+import NotFoundPage from '@/pages/NotFoundPage'
+import ProjectsPage from '@/pages/ProjectsPage'
+import ArticlesPage from '@/pages/generated/ArticlesPage'
+import articleDynamicRoute from '@/pages/generated/article-dynamic-route'
+import type { PageInfo, Routes } from '@/router/routes'
 
 /**
  * All available routes.
@@ -45,7 +45,10 @@ export function findRoute(route: string): PageInfo | undefined {
   return _findRoute(route, appRoutes)
 }
 
-function _findRoute(route: string, pageMap: Routes | undefined): PageInfo | undefined {
+function _findRoute(
+  route: string,
+  pageMap: Routes | undefined,
+): PageInfo | undefined {
   if (pageMap === undefined) {
     return undefined
   }
@@ -60,7 +63,10 @@ function _findRoute(route: string, pageMap: Routes | undefined): PageInfo | unde
     }
 
     if (Array.isArray(p.children)) {
-      const returnValue = _findRoute(route.replace(`${p.path}/`, ''), p.children)
+      const returnValue = _findRoute(
+        route.replace(`${p.path}/`, ''),
+        p.children,
+      )
       if (!returnValue) {
         continue
       }

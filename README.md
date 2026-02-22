@@ -8,18 +8,18 @@ Toy level static blog generator.
 
 ## Features
 
-* Articles in `mdx` format by using `@mdx-js`.
-* Support GitHub pages, serve as a single page application.
-* Page and route generation for articles.
-* Intend to be lightweight.
-  * Depdends on `react` + `@mdx-js` + `eslint` + `typescript`.
-  * No third-party dependencies for routing, state management, animation and UI.
+- Articles in `mdx` format by using `@mdx-js`.
+- Support GitHub pages, serve as a single page application.
+- Page and route generation for articles.
+- Intend to be lightweight.
+  - Depdends on `react` + `@mdx-js` + `eslint` + `typescript`.
+  - No third-party dependencies for routing, state management, animation and UI.
 
 ## Prerequisites
 
-* nodejs (>= 24.10.1)
-* pnpm
-* eslint
+- nodejs (>= 24.10.1)
+- pnpm
+- eslint
 
 ## Usage
 
@@ -41,11 +41,7 @@ Sample config:
 {
   "title": "Sample page",
   "date": "2026-01-01",
-  "tags": [
-    "sample",
-    "mdx",
-    "react"
-  ],
+  "tags": ["sample", "mdx", "react"],
   "draft": false
 }
 ```
@@ -83,4 +79,4 @@ pnpm lint:all
 
 ## Unsupported features
 
-* Frontmatter.
+- Frontmatter.

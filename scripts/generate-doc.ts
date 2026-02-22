@@ -15,20 +15,29 @@ interface DocInputInfo {
 }
 
 interface DocConfig {
-  title: string,
-  summary: string,
-  date: string,
-  tags: string[],
-  draft: boolean,
+  title: string
+  summary: string
+  date: string
+  tags: string[]
+  draft: boolean
 }
 
 function isDocConfig(data: unknown): boolean {
-  return typeof data === 'object' && data !== null &&
-  'title' in data && typeof data.title === 'string' &&
-  'summary' in data && typeof data.summary === 'string' &&
-  'date' in data && typeof data.date === 'string' &&
-  'tags' in data && Array.isArray(data.tags)  && data.tags.every((ele) => typeof ele === 'string') &&
-  'draft' in data && typeof data.draft  === 'boolean'
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'title' in data &&
+    typeof data.title === 'string' &&
+    'summary' in data &&
+    typeof data.summary === 'string' &&
+    'date' in data &&
+    typeof data.date === 'string' &&
+    'tags' in data &&
+    Array.isArray(data.tags) &&
+    data.tags.every((ele) => typeof ele === 'string') &&
+    'draft' in data &&
+    typeof data.draft === 'boolean'
+  )
 }
 
 log('generating documents')
@@ -111,23 +120,44 @@ for (const [i, doc] of docs.entries()) {
     const component = `Article${id}Page`
     // Save the updated document in the generated folder.
     // The `updatedDoc` is injected with anchor ids for deep linking.
-    const { toc: tableOfContents, doc: updatedDoc } = parseMdxTableOfContent(doc.docPath)
+    const { toc: tableOfContents, doc: updatedDoc } = parseMdxTableOfContent(
+      doc.docPath,
+    )
     fs.writeFileSync(path.join(docOutputDir, `${component}.mdx`), updatedDoc)
 
     // const docPathTrimmed = doc.docPath.replace(/src[\\/]/, '')
 
-    const outputComponentString = '/* eslint-disable import/order */\n' + templateComponentString
-      // .replace('// @@DOC_IMPORT_PATH@@', `import Doc from '@/${docPathTrimmed}'`)
-      .replace('// @@DOC_IMPORT_PATH@@', `import Doc from './${component}.mdx'`)
-      .replace('// @@DOC_TABLE_OF_CONTENTS@@', tableOfContents.map((x) => `{
+    const outputComponentString =
+      '/* eslint-disable import/order */\n' +
+      templateComponentString
+        // .replace('// @@DOC_IMPORT_PATH@@', `import Doc from '@/${docPathTrimmed}'`)
+        .replace(
+          '// @@DOC_IMPORT_PATH@@',
+          `import Doc from './${component}.mdx'`,
+        )
+        .replace(
+          '// @@DOC_TABLE_OF_CONTENTS@@',
+          tableOfContents
+            .map(
+              (x) => `{
     level: ${x.level.toString()},
     title: '${escapeSingleQuote(x.title)}',
     anchorId: '${x.anchorId}',
-  },`).join('\n  ').trim())
-      .replace('ArticleTemplatePage', component)
-      .replace(/{\/\* @@DOC_CONTENT@@ \*\/}/, '<Doc components={mdxComponents}/>')
+  },`,
+            )
+            .join('\n  ')
+            .trim(),
+        )
+        .replace('ArticleTemplatePage', component)
+        .replace(
+          /{\/\* @@DOC_CONTENT@@ \*\/}/,
+          '<Doc components={mdxComponents}/>',
+        )
 
-    fs.writeFileSync(path.join(docOutputDir, `${component}.tsx`), outputComponentString)
+    fs.writeFileSync(
+      path.join(docOutputDir, `${component}.tsx`),
+      outputComponentString,
+    )
 
     const { title, date, tags, draft, summary } = config as DocConfig
     dynamicRoutes.push({
@@ -141,35 +171,67 @@ for (const [i, doc] of docs.entries()) {
       draft,
       summary,
     })
-  } catch(error) {
+  } catch (error) {
     fatal(`failed to generate doc for ${doc.dirPath}:`, error)
   }
 }
 
 log('generate article dynamic routes:', dynamicRoutes)
-const articleTemplateRouteString = fs.readFileSync('./src/pages/article-dynamic-route.template.ts', 'utf8')
-const articleDynamicRouteFile = path.join(docOutputDir, 'article-dynamic-route.ts')
+const articleTemplateRouteString = fs.readFileSync(
+  './src/pages/article-dynamic-route.template.ts',
+  'utf8',
+)
+const articleDynamicRouteFile = path.join(
+  docOutputDir,
+  'article-dynamic-route.ts',
+)
 const articleDynamicRouteString = articleTemplateRouteString
-  .replace('// @@DOC_IMPORT_PATHS@@', dynamicRoutes.map(r => `import ${r.component} from '@/pages/generated/${r.component}.tsx'`).join('\n'))
-  .replace('// @@DOC_PATHS@@', dynamicRoutes.map(r => `{
+  .replace(
+    '// @@DOC_IMPORT_PATHS@@',
+    dynamicRoutes
+      .map(
+        (r) =>
+          `import ${r.component} from '@/pages/generated/${r.component}.tsx'`,
+      )
+      .join('\n'),
+  )
+  .replace(
+    '// @@DOC_PATHS@@',
+    dynamicRoutes
+      .map(
+        (r) => `{
       path: '${r.path}',
       title: '${escapeSingleQuote(r.title)}',
       component: ${r.component},
-    },`).join('\n    ').trim())
+    },`,
+      )
+      .join('\n    ')
+      .trim(),
+  )
 
 fs.writeFileSync(articleDynamicRouteFile, articleDynamicRouteString)
 
 log('generate articles page')
-const articlesTemplateString =fs.readFileSync( './src/pages/ArticlesPage.template.tsx', 'utf8')
+const articlesTemplateString = fs.readFileSync(
+  './src/pages/ArticlesPage.template.tsx',
+  'utf8',
+)
 const articlesFile = path.join(docOutputDir, 'ArticlesPage.tsx')
-const articlesPageString = articlesTemplateString
-  .replace('// @@ARTICLE_INFO@@', dynamicRoutes.map(r => `{
+const articlesPageString = articlesTemplateString.replace(
+  '// @@ARTICLE_INFO@@',
+  dynamicRoutes
+    .map(
+      (r) => `{
     title: '${escapeSingleQuote(r.title)}',
     route: '${r.path}',
     date: '${r.date}',
     summary: '${r.summary}',
     tags: [${r.tags.map((tag) => `'${tag}'`).join(', ')}],
     draft: ${r.draft ? 'true' : 'false'},
-  },`).join('\n  ').trim())
+  },`,
+    )
+    .join('\n  ')
+    .trim(),
+)
 
 fs.writeFileSync(articlesFile, articlesPageString)

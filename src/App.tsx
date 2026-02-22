@@ -1,8 +1,13 @@
-import { createElement, useEffect, useEffectEvent, useRef, useState } from 'react'
-import { findRoute, notFondPageTarget } from '@/router/router.ts'
-import { log } from './log.ts'
-import { purifyUrl } from './utils/encoding.ts'
-
+import {
+  createElement,
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+} from 'react'
+import { findRoute, notFondPageTarget } from '@/router/router'
+import { log } from './log'
+import { purifyUrl } from './utils/encoding'
 
 /**
  *
@@ -11,9 +16,14 @@ import { purifyUrl } from './utils/encoding.ts'
  * * hash: '/foo/bar/'
  * * anchor: 'baz'
  */
-function splitHashAndAnchor(data: string): { hash: string, anchor: string | undefined } {
+function splitHashAndAnchor(data: string): {
+  hash: string
+  anchor: string | undefined
+} {
   const s = data.indexOf('#')
-  return s == -1 ? { hash: data, anchor: undefined } : { hash: data.slice(0, s), anchor: data.slice(s+1) }
+  return s == -1
+    ? { hash: data, anchor: undefined }
+    : { hash: data.slice(0, s), anchor: data.slice(s + 1) }
 }
 
 export default function App() {
@@ -34,14 +44,20 @@ export default function App() {
 
   const renderPage = () => {
     const path = globalThis.location.pathname
-    const { hash, anchor } = splitHashAndAnchor(globalThis.location.hash.slice(1) || '/')
+    const { hash, anchor } = splitHashAndAnchor(
+      globalThis.location.hash.slice(1) || '/',
+    )
     const targetRoute = currHash ?? hash
     if (currAnchor !== anchor) {
       setCurrAnchor(anchor)
     }
 
-    log(`renderPage: currnetPage=${currHash ?? '<undefined>'}, path=${path}, hash=${hash}, anchor=${anchor ?? '<undefined>'}`)
-    return createElement((findRoute(targetRoute) ?? notFondPageTarget).component)
+    log(
+      `renderPage: currnetPage=${currHash ?? '<undefined>'}, path=${path}, hash=${hash}, anchor=${anchor ?? '<undefined>'}`,
+    )
+    return createElement(
+      (findRoute(targetRoute) ?? notFondPageTarget).component,
+    )
   }
 
   const onScrollToElementRequired = useEffectEvent((hash: string) => {
@@ -53,20 +69,32 @@ export default function App() {
     let newHash: string
     if (prevHashAndAnchor.current.length === 0) {
       // No current anchor indicates user is accessing with direct url to some page.
-      const { hash: currHash } = splitHashAndAnchor(globalThis.location.hash.slice(1) || '/')
+      const { hash: currHash } = splitHashAndAnchor(
+        globalThis.location.hash.slice(1) || '/',
+      )
       newHash = `${currHash}#${hash}`
     } else {
       const prevHashAnchorIndex = prevHashAndAnchor.current.indexOf('#')
-      newHash = prevHashAnchorIndex === -1 ? `${prevHashAndAnchor.current}#${hash}` : `${prevHashAndAnchor.current.slice(0, prevHashAnchorIndex)}#${hash}`
+      newHash =
+        prevHashAnchorIndex === -1
+          ? `${prevHashAndAnchor.current}#${hash}`
+          : `${prevHashAndAnchor.current.slice(0, prevHashAnchorIndex)}#${hash}`
     }
 
-    log('replace state with', `/#${newHash}`, 'prevHashAndAnchor', prevHashAndAnchor)
+    log(
+      'replace state with',
+      `/#${newHash}`,
+      'prevHashAndAnchor',
+      prevHashAndAnchor,
+    )
     globalThis.history.replaceState({}, '', `/#${newHash}`)
 
     const elementId = '#' + hash
     const targetElement = document.querySelector(elementId)
     if (!targetElement) {
-      log(`failed to scroll to element with hash id ${elementId}: element not found`)
+      log(
+        `failed to scroll to element with hash id ${elementId}: element not found`,
+      )
       return
     }
 
@@ -122,9 +150,5 @@ export default function App() {
     }
   }, [currAnchor])
 
-  return (
-    <>
-      {renderPage()}
-    </>
-  )
+  return <>{renderPage()}</>
 }

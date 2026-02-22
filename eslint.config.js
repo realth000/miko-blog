@@ -8,19 +8,18 @@ import unicorn from 'eslint-plugin-unicorn'
 import importPlugin from 'eslint-plugin-import'
 import stylistic from '@stylistic/eslint-plugin'
 import { defineConfig, globalIgnores } from 'eslint/config'
+import prettierConfig from 'eslint-config-prettier'
 
 export default defineConfig([
   globalIgnores(['dist', 'node_modules', 'src/pages/generated']),
 
-  // Brower stuff.
+  // Browser stuff.
   {
     files: ['src/**/*.{ts,tsx}', '*.ts', '*.tsx'],
     extends: [
       js.configs.recommended,
-      tseslint.configs.strict,
-      tseslint.configs.strictTypeChecked,
-      tseslint.configs.stylistic,
-      tseslint.configs.stylisticTypeChecked,
+      ...tseslint.configs.strictTypeChecked,
+      ...tseslint.configs.stylisticTypeChecked,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
       unicorn.configs.recommended,
@@ -30,65 +29,8 @@ export default defineConfig([
       react: react,
       '@stylistic': stylistic,
     },
-    rules: {
-      'import/no-unresolved': 'error',
-      'import/order': [
-        'error',
-        {
-          'groups': ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: false,
-          },
-          pathGroups: [
-            {
-              pattern: '@/**',
-              group: 'internal',
-              position: 'after'
-            },
-          ],
-          'newlines-between': 'never',
-        },
-      ],
-      'import/no-cycle': 'error',
-      'import/extensions': ['error', 'always', { ignorePackages: true }],
-
-      '@stylistic/semi': ['error', 'never'],
-      '@stylistic/quotes': ['error', 'single'],
-      '@stylistic/indent': ['error', 2],
-      '@stylistic/space-before-function-paren': ['error', 'never'],
-      '@stylistic/object-curly-spacing': ['error', 'always'],
-      '@stylistic/array-bracket-spacing': ['error', 'never'],
-      '@stylistic/block-spacing': ['error', 'always'],
-      '@stylistic/comma-dangle': ['error', {
-        'arrays': 'always-multiline',
-        'objects': 'always-multiline',
-        'imports': 'always-multiline',
-        'exports': 'always-multiline',
-        'functions': 'only-multiline',
-        'importAttributes': 'always-multiline',
-        'dynamicImports': 'always-multiline',
-        'enums': 'always-multiline',
-        'generics': 'always-multiline',
-        'tuples': 'always-multiline'
-      }],
-      '@stylistic/jsx-tag-spacing': ['error', {
-        'closingSlash': 'never',
-        'beforeSelfClosing': 'never',
-        'afterOpening': 'never',
-        'beforeClosing': 'never',
-      }],
-      'react/jsx-indent': ['error', 2],
-      'react/jsx-indent-props': ['error', 2],
-
-      // Not works with tsx files.
-      'unicorn/filename-case': 'off',
-
-      // Abbr is useful.
-      'unicorn/prevent-abbreviations': 'off',
-    },
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
       globals: {
         ...globals.browser,
         ...globals.es2022,
@@ -100,11 +42,67 @@ export default defineConfig([
     },
     settings: {
       'import/resolver': {
-        'typescript': {
-          'project': './tsconfig.app.json'
-        }
-      }
-    }
+        typescript: {
+          project: './tsconfig.app.json',
+        },
+      },
+    },
+    rules: {
+      'import/no-unresolved': 'error',
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling', 'index'],
+            'object',
+            'type',
+          ],
+          alphabetize: { order: 'asc', caseInsensitive: false },
+          pathGroups: [
+            { pattern: '@/**', group: 'internal', position: 'after' },
+          ],
+          'newlines-between': 'never',
+        },
+      ],
+      'import/no-cycle': 'error',
+      'import/extensions': [
+        'error',
+        'ignorePackages',
+        {
+          ts: 'never',
+          tsx: 'never',
+          js: 'never',
+          jsx: 'never',
+        },
+      ],
+
+      '@stylistic/semi': ['error', 'never'],
+      '@stylistic/quotes': ['error', 'single'],
+      '@stylistic/jsx-quotes': ['error', 'prefer-double'],
+      '@stylistic/indent': ['error', 2],
+      '@stylistic/space-before-function-paren': ['error', 'never'],
+      '@stylistic/object-curly-spacing': ['error', 'always'],
+      '@stylistic/jsx-tag-spacing': [
+        'error',
+        {
+          closingSlash: 'never',
+          beforeSelfClosing: 'always',
+          afterOpening: 'never',
+          beforeClosing: 'never',
+        },
+      ],
+      'react/jsx-indent': ['error', 2],
+      'react/jsx-indent-props': ['error', 2],
+
+      // Not works with tsx files.
+      'unicorn/filename-case': 'off',
+
+      // Abbr is useful.
+      'unicorn/prevent-abbreviations': 'off',
+    },
   },
 
   // Script stuff.
@@ -112,10 +110,8 @@ export default defineConfig([
     files: ['vite.config.ts', 'vitest.config.ts', 'scripts/**/*.{ts,js}'],
     extends: [
       js.configs.recommended,
-      tseslint.configs.strict,
-      tseslint.configs.strictTypeChecked,
-      tseslint.configs.stylistic,
-      tseslint.configs.stylisticTypeChecked,
+      ...tseslint.configs.strictTypeChecked,
+      ...tseslint.configs.stylisticTypeChecked,
       unicorn.configs.recommended,
     ],
     plugins: {
@@ -135,51 +131,53 @@ export default defineConfig([
     settings: {
       'import/resolver': {
         typescript: {
-          project: './tsconfig.node.json'
-        }
-      }
+          project: './tsconfig.node.json',
+        },
+      },
     },
     rules: {
       'import/no-unresolved': 'error',
       'import/order': [
         'error',
         {
-          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling', 'index'],
+            'object',
+            'type',
+          ],
           alphabetize: { order: 'asc', caseInsensitive: false },
           pathGroups: [
-            { pattern: '@/**', group: 'internal', position: 'after' }
+            { pattern: '@/**', group: 'internal', position: 'after' },
           ],
           'newlines-between': 'never',
         },
       ],
       'import/no-cycle': 'error',
-      'import/extensions': ['error', 'always', { ignorePackages: true }],
+      'import/extensions': [
+        'error',
+        'ignorePackages',
+        {
+          ts: 'always',
+          tsx: 'always',
+          js: 'never',
+          jsx: 'never',
+        },
+      ],
 
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/indent': ['error', 2],
       '@stylistic/space-before-function-paren': ['error', 'never'],
       '@stylistic/object-curly-spacing': ['error', 'always'],
-      '@stylistic/array-bracket-spacing': ['error', 'never'],
-      '@stylistic/block-spacing': ['error', 'always'],
-      '@stylistic/comma-dangle': ['error', {
-        'arrays': 'always-multiline',
-        'objects': 'always-multiline',
-        'imports': 'always-multiline',
-        'exports': 'always-multiline',
-        'functions': 'only-multiline',
-        'importAttributes': 'always-multiline',
-        'dynamicImports': 'always-multiline',
-        'enums': 'always-multiline',
-        'generics': 'always-multiline',
-        'tuples': 'always-multiline'
-      }],
-
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off',
 
       // Abbr is useful.
       'unicorn/prevent-abbreviations': 'off',
     },
-  }
+  },
+
+  // Disable conflict rules.
+  prettierConfig,
 ])

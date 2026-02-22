@@ -14,20 +14,20 @@ export interface PageInfo {
    * * For a top-level page, `path` should start with `/`.
    * * For other pages, `path` should NOT start with `/`.
    */
-  path: string;
+  path: string
 
   /**
    * Page title.
    */
-  title: string;
+  title: string
 
   /**
    * The element name of the page content.
    */
-  component: FunctionComponent;
+  component: FunctionComponent
 
   /**
    * Optional children routes.
    */
-  children?: Routes | DynamicRoute;
+  children?: Routes | DynamicRoute
 }

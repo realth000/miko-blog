@@ -1,5 +1,5 @@
 // @@DOC_IMPORT_PATHS@@
-import { type DynamicRoute, type PageInfo } from '@/router/routes.ts'
+import { type DynamicRoute, type PageInfo } from '@/router/routes'
 
 const articleDynamicRoute: DynamicRoute = (page: string) => {
   const articlePages: PageInfo[] = [

@@ -29,13 +29,16 @@ export function hashObject(obj: unknown): string {
  */
 function hash(s: string): string {
   /* Simple hash function. */
-  let a = 1, c = 0, h, o
+  let a = 1,
+    c = 0,
+    h,
+    o
   a = 0
   for (h = s.length - 1; h >= 0; h--) {
     o = s.codePointAt(h) ?? 0
-    a = (a << 6 & 268_435_455) + o + (o << 14)
+    a = ((a << 6) & 268_435_455) + o + (o << 14)
     c = a & 266_338_304
-    a = c === 0 ? a : a ^ c >> 21
+    a = c === 0 ? a : a ^ (c >> 21)
   }
   return String(a)
-};
+}
