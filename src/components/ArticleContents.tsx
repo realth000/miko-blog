@@ -11,7 +11,9 @@ export default function ArticleContents({ toc }: { toc: ArticleTableOfContents }
       <div>
         {toc.map(x => (
           <div key={`#header-${x.title}`}>
-            <div>{`${x.level.toString()} - ${x.title}`}</div>
+            <a href={`#${x.anchorId}`}>
+              <div>{`${x.level.toString()} - ${x.title}`}</div>
+            </a>
           </div>
         ))}
       </div>

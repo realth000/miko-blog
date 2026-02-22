@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { escapeSingleQuote } from './shared/escape-string.ts'
 import { log, fatal } from './shared/log.ts'
-import { parseMdxTableOfContentEx } from './shared/parse-mdx-toc.ts'
+import { parseMdxTableOfContent } from './shared/parse-mdx-toc.ts'
 
 /**
  * Doc input info
@@ -111,7 +111,7 @@ for (const [i, doc] of docs.entries()) {
     const component = `Article${id}Page`
     // Save the updated document in the generated folder.
     // The `updatedDoc` is injected with anchor ids for deep linking.
-    const { toc: tableOfContents, doc: updatedDoc } = parseMdxTableOfContentEx(doc.docPath)
+    const { toc: tableOfContents, doc: updatedDoc } = parseMdxTableOfContent(doc.docPath)
     fs.writeFileSync(path.join(docOutputDir, `${component}.mdx`), updatedDoc)
 
     // const docPathTrimmed = doc.docPath.replace(/src[\\/]/, '')
@@ -122,6 +122,7 @@ for (const [i, doc] of docs.entries()) {
       .replace('// @@DOC_TABLE_OF_CONTENTS@@', tableOfContents.map((x) => `{
     level: ${x.level.toString()},
     title: '${escapeSingleQuote(x.title)}',
+    anchorId: '${x.anchorId}',
   },`).join('\n  ').trim())
       .replace('ArticleTemplatePage', component)
       .replace(/{\/\* @@DOC_CONTENT@@ \*\/}/, '<Doc components={mdxComponents}/>')
