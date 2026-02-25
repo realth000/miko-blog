@@ -224,7 +224,7 @@ const articlesPageString = articlesTemplateString.replace(
       (r) => `{
     title: '${escapeSingleQuote(r.title)}',
     route: '${r.path}',
-    date: '${r.date}',
+    date: Date.parse('${r.date}'),
     summary: '${r.summary}',
     tags: [${r.tags.map((tag) => `'${tag}'`).join(', ')}],
     draft: ${r.draft ? 'true' : 'false'},

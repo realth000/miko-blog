@@ -62,7 +62,7 @@ export default function Heading({
 
   const { title, anchor } = splitTitleAndAnchor(children)
 
-  const commonClass = 'flex gap-2 my-4 items-center'
+  const commonClass = 'flex gap-2 my-article-paragraph items-center'
   const finalClassName = [commonClass, className].filter(Boolean).join(' ')
   const Tag = HEADING_TAGS[level]
 

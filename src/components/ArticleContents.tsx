@@ -10,7 +10,7 @@ export default function ArticleContents({
   }
 
   return (
-    <aside className="sticky top-(--nav-bar-safe-area-height) w-(--side-bar-width) self-start">
+    <aside className="top-nav-bar-safe-area-height w-side-bar-width sticky self-start">
       I am the article contents side bar
       <nav className="space-y-1">
         {toc.map((x) => (

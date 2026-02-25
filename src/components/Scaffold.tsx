@@ -10,7 +10,7 @@ export default function Scaffold({
   return (
     <>
       <NavBar />
-      <div className="max-auto flex max-w-(--max-width-page) gap-6 px-2 pt-(--nav-bar-safe-area-height)">
+      <div className="pt-nav-bar-safe-area-height max-w-max-width-page mx-auto flex w-full gap-6 px-2">
         {children}
       </div>
       <Footer />
