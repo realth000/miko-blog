@@ -7,11 +7,30 @@
   --nav-bar-height: 3rem;
   --nav-bar-safe-area-height: calc(var(--nav-bar-height) + 8px);
   --side-bar-width: 12rem;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+  html {
+    touch-action: manipulation;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-synthesis: style weight;
+    overflow-wrap: break-word;
+    word-break: break-word;
+
+    /* For Chrome 121+ */
+    text-wrap: pretty;
+  }
+
+  /* Disable ligatures in code blocks */
+  code, kbd, pre, samp {
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+  }
 }
 
 *,

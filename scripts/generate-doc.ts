@@ -151,7 +151,7 @@ for (const [i, doc] of docs.entries()) {
         .replace('ArticleTemplatePage', component)
         .replace(
           /{\/\* @@DOC_CONTENT@@ \*\/}/,
-          '<Doc components={mdxComponents}/>',
+          '<Doc components={MDX_COMPONENTS}/>',
         )
 
     fs.writeFileSync(
