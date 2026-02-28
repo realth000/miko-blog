@@ -12,14 +12,25 @@ export default function ArticleContents({
   return (
     <aside className="top-nav-bar-safe-area-height w-side-bar-width sticky self-start">
       I am the article contents side bar
-      <nav className="space-y-1">
+      {/* <nav className="space-y-1"> */}
+      <nav className="flex flex-col gap-0.5">
         {toc.map((x) => (
           <div key={`#header-${x.title}`}>
             <a
               href={`#${x.anchorId}`}
-              className="block rounded px-3 py-1.5 text-sm text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900"
+              className="text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface group block rounded-lg px-3 py-2 text-sm transition-all duration-200 ease-in-out"
             >
-              <div>{`${x.level.toString()} - ${x.title}`}</div>
+              <div className="flex items-center gap-2">
+                <span
+                  className={`bg-primary/30 group-hover:bg-primary group-hover:border-primary h-px transition-all group-hover:border`}
+                  style={{
+                    width: `${((x.level - 1) * 0.5 + 0.25).toString()}rem`,
+                  }}
+                ></span>
+                <span className="group-hover:text-primary text-on-surface/80 truncate transition-colors duration-200">
+                  {x.title}
+                </span>
+              </div>
             </a>
           </div>
         ))}

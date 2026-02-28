@@ -7,6 +7,7 @@ import {
 } from 'react'
 import { findRoute, notFondPageTarget } from '@/router/router'
 import { log } from './log'
+import ThemeContext, { type ColorScheme } from './providers/theme-context'
 import { purifyUrl } from './utils/encoding'
 
 /**
@@ -27,6 +28,19 @@ function splitHashAndAnchor(data: string): {
 }
 
 export default function App() {
+  const preferDark = globalThis.window.matchMedia(
+    '(prefers-color-scheme: dark)',
+  ).matches
+  const storedTheme =
+    localStorage.getItem('theme') ?? (preferDark ? 'dark' : 'light')
+  const initialTheme: ColorScheme =
+    storedTheme === 'dark'
+      ? 'dark'
+      : storedTheme === 'light'
+        ? 'light'
+        : 'system'
+  const [theme, setTheme] = useState<ColorScheme>(initialTheme)
+
   /**
    * The hash here is the part of hash for routing.
    */
@@ -150,5 +164,18 @@ export default function App() {
     }
   }, [currAnchor])
 
-  return <>{renderPage()}</>
+  useEffect(() => {
+    const inDark =
+      theme === 'system' ? (preferDark ? true : false) : theme === 'dark'
+    document.documentElement.classList.toggle('dark', inDark)
+    localStorage.setItem('theme', theme)
+  }, [theme, preferDark])
+
+  return (
+    <>
+      <ThemeContext.Provider value={{ theme, setTheme }}>
+        {renderPage()}
+      </ThemeContext.Provider>
+    </>
+  )
 }

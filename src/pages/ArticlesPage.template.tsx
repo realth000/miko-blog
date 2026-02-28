@@ -14,10 +14,12 @@ function ArticleInfoCard(info: ArticleInfo) {
   return (
     <div
       key={info.route}
-      className="rounded-xl border border-gray-200 bg-gray-700 shadow-lg"
+      className="border-outline bg-surface-container-low rounded-xl border shadow-lg"
     >
       <a href={`#/articles/${info.route}`}>
-        <h3 className="mb-2 text-xl font-bold text-gray-300">{info.title}</h3>
+        <h3 className="text-primary-300 mb-2 text-xl font-bold">
+          {info.title}
+        </h3>
         <div className="text-sm">{info.date.toString()}</div>
         <div>{info.summary}</div>
         <div>{info.tags.join('; ')}</div>

@@ -94,7 +94,7 @@ export const MDX_COMPONENTS: MDXComponents = {
   code: ({ children, ...props }) => {
     return (
       <code
-        className="bg-article-code-bg rounded px-1 py-0.5 font-mono"
+        className="bg-surface-container-high rounded px-1 py-0.5 font-mono"
         {...props}
       >
         {children}
@@ -119,7 +119,7 @@ export const MDX_COMPONENTS: MDXComponents = {
             return (
               <div className="relative">
                 {/* Code */}
-                <div className="my-article-paragraph bg-article-code-bg gap-2 overflow-x-scroll rounded-md p-4 font-mono">
+                <div className="my-article-paragraph bg-surface-container-low gap-2 overflow-x-scroll rounded-md p-4 font-mono">
                   {React.cloneElement(child, {
                     // @ts-expect-error Safe to assign class name here.
                     className: cls,
@@ -143,7 +143,7 @@ export const MDX_COMPONENTS: MDXComponents = {
   hr: ({ children, ...props }) => {
     return (
       <hr
-        className="border-tertiary my-article-paragraph border-t-2"
+        className="border-tertiary-variant my-article-paragraph border-t-2"
         {...props}
       >
         {children}
@@ -272,7 +272,7 @@ export const MDX_COMPONENTS: MDXComponents = {
   blockquote: ({ children, ...props }) => {
     return (
       <blockquote
-        className="bg-surface-container-highest my-article-paragraph rounded px-6 py-5"
+        className="bg-surface-container border-tertiary-container my-article-paragraph rounded border-l-4 px-6 py-5"
         {...props}
       >
         <div>
