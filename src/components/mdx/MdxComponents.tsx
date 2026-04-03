@@ -1,5 +1,6 @@
 import { IconQuote } from '@tabler/icons-react'
 import React, { isValidElement, type ReactElement, type ReactNode } from 'react'
+import CodeBlock from './CodeBlock'
 import Heading from './Heading'
 import type { MDXComponents } from 'mdx/types.js'
 
@@ -114,27 +115,10 @@ export const MDX_COMPONENTS: MDXComponents = {
           }
 
           if (isTag('code', child)) {
-            const cls = extractClassName(child)?.trim() ?? ''
-
-            return (
-              <div className="relative">
-                {/* Code */}
-                <div className="my-article-paragraph bg-surface-container-low gap-2 overflow-x-scroll rounded-md p-4 font-mono">
-                  {React.cloneElement(child, {
-                    // @ts-expect-error Safe to assign class name here.
-                    className: cls,
-                  })}
-                </div>
-
-                {/* Language info */}
-                {cls.length > 1 && (
-                  <div className="text-on-surface-variant bg-surface-container-high absolute top-3 right-3 rounded p-2 text-xs">
-                    {cls.replace('language-', '')}
-                  </div>
-                )}
-              </div>
-            )
+            // Code block.
+            return <CodeBlock child={child} />
           }
+
           return child
         })}
       </pre>
@@ -272,7 +256,7 @@ export const MDX_COMPONENTS: MDXComponents = {
   blockquote: ({ children, ...props }) => {
     return (
       <blockquote
-        className="bg-surface-container border-tertiary-container my-article-paragraph rounded border-l-4 px-6 py-5"
+        className="bg-surface-container border-tertiary-container my-article-paragraph rounded-lg border-l-4 px-6 py-5"
         {...props}
       >
         <div>

@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react'
 import { findRoute, notFondPageTarget } from '@/router/router'
+import { fallbackToEn } from './i18n/i18n-context'
 import { log } from './log'
 import ThemeContext, { type ColorScheme } from './providers/theme-context'
 import { purifyUrl } from './utils/encoding'
@@ -170,6 +171,15 @@ export default function App() {
     document.documentElement.classList.toggle('dark', inDark)
     localStorage.setItem('theme', theme)
   }, [theme, preferDark])
+
+  useEffect(() => {
+    // Setup i18n.
+    const lang = navigator.language
+    if (!lang.toLocaleLowerCase().startsWith('zh')) {
+      // FIXME: Not works.
+      fallbackToEn()
+    }
+  }, [])
 
   return (
     <>

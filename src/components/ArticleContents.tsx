@@ -1,3 +1,4 @@
+import { getI18n } from '@/i18n/i18n-context'
 import type { ArticleTableOfContents } from '@/models/article-table-of-contents'
 
 export default function ArticleContents({
@@ -9,9 +10,11 @@ export default function ArticleContents({
     return <></>
   }
 
+  const tr = getI18n().acticlePage.tableOfContents
+
   return (
     <aside className="top-nav-bar-safe-area-height w-side-bar-width sticky self-start">
-      I am the article contents side bar
+      {tr.title}
       {/* <nav className="space-y-1"> */}
       <nav className="flex flex-col gap-0.5">
         {toc.map((x) => (
