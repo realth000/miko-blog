@@ -49,7 +49,7 @@ function CopyButton({ codeBlockId }: { codeBlockId: string }) {
               }
 
               navigator.clipboard
-                .writeText(code)
+                .writeText(code.trim())
                 .then(() => {
                   setJustCopied(true)
                 })
