@@ -27,6 +27,12 @@ export const i18nEn: Translations = {
           copiedTooltip: 'Copied',
         },
       },
+      heading: {
+        copyButton: {
+          tooltip: 'Copy chapter direct linke',
+          copiedTooltip: 'Copied',
+        },
+      },
     },
   },
 }

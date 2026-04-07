@@ -22,6 +22,12 @@ export interface Translations {
           copiedTooltip: string
         }
       }
+      heading: {
+        copyButton: {
+          tooltip: string
+          copiedTooltip: string
+        }
+      }
     }
   }
 }

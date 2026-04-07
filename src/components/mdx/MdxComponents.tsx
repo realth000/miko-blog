@@ -1,4 +1,4 @@
-import { IconQuote } from '@tabler/icons-react'
+import { IconCopy, IconQuote } from '@tabler/icons-react'
 import React, { isValidElement, type ReactElement, type ReactNode } from 'react'
 import CodeBlock from './CodeBlock'
 import Heading from './Heading'
@@ -98,6 +98,10 @@ export const MDX_COMPONENTS: MDXComponents = {
         className="bg-surface-container-high rounded px-1 py-0.5 font-mono"
         {...props}
       >
+        <button className="pr-1">
+          {' '}
+          <IconCopy size={14}></IconCopy>
+        </button>
         {children}
       </code>
     )
@@ -259,7 +263,7 @@ export const MDX_COMPONENTS: MDXComponents = {
         className="bg-surface-container border-tertiary-container my-article-paragraph rounded-lg px-4 py-2"
         {...props}
       >
-        <div>
+        <div className="text-on-surface-variant">
           <IconQuote className="text-tertiary/70 rotate-180" />
           {children}
           <div className="flex justify-end">

@@ -27,6 +27,12 @@ export const i18nZh: Translations = {
           copiedTooltip: '已复制',
         },
       },
+      heading: {
+        copyButton: {
+          tooltip: '复制章节跳转链接',
+          copiedTooltip: '已复制',
+        },
+      },
     },
   },
 }
