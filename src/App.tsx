@@ -5,11 +5,12 @@ import {
   useRef,
   useState,
 } from 'react'
-import { findRoute, notFondPageTarget } from '@/router/router'
+import { findRoute, homePageTarget, notFoundPageTarget } from '@/router/router'
 import { fallbackToEn } from './i18n/i18n-context'
 import { log } from './log'
 import ThemeContext, { type ColorScheme } from './providers/theme-context'
 import { purifyUrl } from './utils/encoding'
+import type { PageInfo } from './router/routes'
 
 /**
  *
@@ -29,6 +30,8 @@ function splitHashAndAnchor(data: string): {
 }
 
 export default function App() {
+  const [page, setPage] = useState<PageInfo>(homePageTarget)
+
   const preferDark = globalThis.window.matchMedia(
     '(prefers-color-scheme: dark)',
   ).matches
@@ -56,24 +59,6 @@ export default function App() {
    * Concated hash and anchor forms the entire url hash.
    */
   const prevHashAndAnchor = useRef('')
-
-  const renderPage = () => {
-    const path = globalThis.location.pathname
-    const { hash, anchor } = splitHashAndAnchor(
-      globalThis.location.hash.slice(1) || '/',
-    )
-    const targetRoute = currHash ?? hash
-    if (currAnchor !== anchor) {
-      setCurrAnchor(anchor)
-    }
-
-    log(
-      `renderPage: currnetPage=${currHash ?? '<undefined>'}, path=${path}, hash=${hash}, anchor=${anchor ?? '<undefined>'}`,
-    )
-    return createElement(
-      (findRoute(targetRoute) ?? notFondPageTarget).component,
-    )
-  }
 
   const onScrollToElementRequired = useEffectEvent((hash: string) => {
     // Only scroll into view by id
@@ -123,8 +108,8 @@ export default function App() {
    * Use this function to handle routing.
    */
   const onHashChanged = useEffectEvent(() => {
-    const hash = purifyUrl(globalThis.location.hash.slice(1)) || '/'
-    if (hash.startsWith('/')) {
+    const currUrl = purifyUrl(globalThis.location.hash.slice(1)) || '/'
+    if (currUrl.startsWith('/')) {
       // Change hash route.
       //
       // Double hash sign in `hash` is possible:
@@ -133,12 +118,29 @@ export default function App() {
       //
       // where /foo/bar is the route and baz is the anchor to scroll.
       // The scrolling is triggered after `currentPage` is updated.
-      setCurrHash(hash)
-      prevHashAndAnchor.current = hash
+      setCurrHash(currUrl)
+      prevHashAndAnchor.current = currUrl
     } else {
       // Scroll in current page, to a specified element.
-      onScrollToElementRequired(hash)
+      onScrollToElementRequired(currUrl)
     }
+
+    const path = globalThis.location.pathname
+    const { hash, anchor } = splitHashAndAnchor(
+      globalThis.location.hash.slice(1) || '/',
+    )
+    const targetRoute = hash
+    if (currAnchor !== anchor) {
+      setCurrAnchor(anchor)
+    }
+
+    log(
+      `renderPage: currnetPage=${currHash ?? '<undefined>'}, path=${path}, hash=${currUrl}, anchor=${anchor ?? '<undefined>'}`,
+    )
+
+    const page = findRoute(targetRoute) ?? notFoundPageTarget
+    document.title = page.title
+    setPage(page)
   })
 
   /**
@@ -184,7 +186,7 @@ export default function App() {
   return (
     <>
       <ThemeContext.Provider value={{ theme, setTheme }}>
-        {renderPage()}
+        {createElement(page.component)}
       </ThemeContext.Provider>
     </>
   )

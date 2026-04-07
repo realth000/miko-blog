@@ -256,14 +256,14 @@ export const MDX_COMPONENTS: MDXComponents = {
   blockquote: ({ children, ...props }) => {
     return (
       <blockquote
-        className="bg-surface-container border-tertiary-container my-article-paragraph rounded-lg border-l-4 px-6 py-5"
+        className="bg-surface-container border-tertiary-container my-article-paragraph rounded-lg px-4 py-2"
         {...props}
       >
         <div>
-          <IconQuote className="text-tertiary/50 rotate-180" />
+          <IconQuote className="text-tertiary/70 rotate-180" />
           {children}
           <div className="flex justify-end">
-            <IconQuote className="text-tertiary/50" />
+            <IconQuote className="text-tertiary/70" />
           </div>
         </div>
       </blockquote>

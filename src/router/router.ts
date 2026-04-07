@@ -7,15 +7,23 @@ import ArticlesPage from '@/pages/generated/ArticlesPage'
 import articleDynamicRoute from '@/pages/generated/article-dynamic-route'
 import type { PageInfo, Routes } from '@/router/routes'
 
+export const homePageTarget: PageInfo = {
+  path: '/',
+  title: 'Home',
+  component: HomePage,
+}
+
+export const notFoundPageTarget: PageInfo = {
+  path: '/notFound',
+  title: 'Page not found',
+  component: NotFoundPage,
+}
+
 /**
  * All available routes.
  */
 const appRoutes: Routes = [
-  {
-    path: '/',
-    title: 'Home',
-    component: HomePage,
-  },
+  homePageTarget,
   {
     path: '/articles',
     title: 'Articles',
@@ -33,12 +41,6 @@ const appRoutes: Routes = [
     component: AboutPage,
   },
 ]
-
-export const notFondPageTarget: PageInfo = {
-  path: '/notFound',
-  title: 'Page not found',
-  component: NotFoundPage,
-}
 
 export function findRoute(route: string): PageInfo | undefined {
   log('find route:', route)

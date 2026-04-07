@@ -19,8 +19,9 @@ export const i18nZh: Translations = {
     components: {
       codeBlock: {
         copyButton: {
-          title: function (lang: string | undefined): string {
-            return lang === undefined ? '代码块' : `代码块（${lang}）`
+          title: function (_lang: string | undefined): string {
+            return '代码块'
+            // return lang === undefined ? '代码块' : `代码块（${lang}）`
           },
           tooltip: '复制代码',
           copiedTooltip: '已复制',

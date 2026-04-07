@@ -1,6 +1,7 @@
 import { IconCheck, IconCode, IconCopy } from '@tabler/icons-react'
 import React, { useEffect, useState } from 'react'
 import { getI18n } from '@/i18n/i18n-context'
+import { log } from '@/log'
 import { hashObject } from '@/utils/encoding'
 import type { ReactElement } from 'react'
 
@@ -53,7 +54,7 @@ function CopyButton({ codeBlockId }: { codeBlockId: string }) {
                   setJustCopied(true)
                 })
                 .catch((error: unknown) => {
-                  console.log(error)
+                  log(error)
                 })
             }
       }
@@ -86,8 +87,15 @@ export default function CodeBlock({
         <div className="flex items-center">
           <div className="mr-auto ml-0 flex py-2 pl-4">
             <IconCode className="text-secondary"></IconCode>
-            <div className="text-secondary pl-2 text-lg font-bold">
-              {tr.copyButton.title(lang)}
+            <div className="flex items-start gap-2">
+              <div className="text-secondary pl-2 text-lg font-bold">
+                {tr.copyButton.title(lang)}
+              </div>
+              {lang !== undefined && lang.length > 1 && (
+                <div className="bg-tertiary-container/60 text-on-tertiary-container/60 rounded px-1 py-0.5 text-xs">
+                  {lang}
+                </div>
+              )}
             </div>
           </div>
           <CopyButton codeBlockId={codeBlockId} />

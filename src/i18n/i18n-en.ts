@@ -19,8 +19,9 @@ export const i18nEn: Translations = {
     components: {
       codeBlock: {
         copyButton: {
-          title: function (lang: string | undefined): string {
-            return lang === undefined ? 'CodeBlock' : `CodeBlock (${lang})`
+          title: function (_lang: string | undefined): string {
+            return 'CodeBlock'
+            // return lang === undefined ? 'CodeBlock' : `CodeBlock (${lang})`
           },
           tooltip: 'Copy code',
           copiedTooltip: 'Copied',
