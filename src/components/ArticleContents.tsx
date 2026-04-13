@@ -1,4 +1,3 @@
-import useMainBodyItem from '@/hooks/use-main-body-item'
 import { getI18n } from '@/i18n/i18n-context'
 import type { ArticleTableOfContents } from '@/models/article-table-of-contents'
 
@@ -7,10 +6,6 @@ export default function ArticleContents({
 }: {
   toc: ArticleTableOfContents
 }) {
-  const titleIds = toc.map((toc) => toc.anchorId)
-
-  const bodyItemId = useMainBodyItem(titleIds)
-
   const tr = getI18n().articlePage.tableOfContents
 
   return (
@@ -25,20 +20,12 @@ export default function ArticleContents({
             >
               <div className="flex items-center gap-2">
                 <span
-                  className={`bg-primary/30 group-hover:bg-primary group-hover:border-primary h-px group-hover:border ${
-                    x.anchorId === bodyItemId
-                      ? 'bg-primary border-primary border'
-                      : ''
-                  }`}
+                  className="bg-primary/30 group-hover:bg-primary group-hover:border-primary h-px group-hover:border"
                   style={{
                     width: `${((x.level - 1) * 0.5 + 0.5).toString()}rem`,
                   }}
                 ></span>
-                <span
-                  className={`group-hover:text-primary text-on-surface/80 truncate ${
-                    x.anchorId === bodyItemId ? 'text-primary' : ''
-                  }`}
-                >
+                <span className="group-hover:text-primary text-on-surface/80 truncate">
                   {x.title}
                 </span>
               </div>
