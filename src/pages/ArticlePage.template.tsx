@@ -15,7 +15,7 @@ export default function ArticleTemplatePage() {
   return (
     <Scaffold>
       <Article>{/* @@DOC_CONTENT@@ */}</Article>
-      <ArticleContents toc={toc} />
+      {toc.length > 0 && <ArticleContents toc={toc} />}
     </Scaffold>
   )
 }

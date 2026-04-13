@@ -1,4 +1,4 @@
-import { IconCloudQuestion, IconMoon, IconSun } from '@tabler/icons-react'
+import { IconBrightnessAuto, IconMoon, IconSun } from '@tabler/icons-react'
 import { useContext } from 'react'
 import { getI18n } from '@/i18n/i18n-context'
 import ThemeContext from '@/providers/theme-context'
@@ -20,7 +20,7 @@ function ThemeButton() {
       ) : theme == 'dark' ? (
         <IconMoon title={tr.dark} />
       ) : (
-        <IconCloudQuestion title={tr.followSystem} />
+        <IconBrightnessAuto title={tr.followSystem} />
       )}
     </button>
   )

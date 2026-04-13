@@ -10,14 +10,14 @@ export interface Translations {
     projects: string
     about: string
   }
-  acticlePage: {
+  articlePage: {
     tableOfContents: {
       title: string
     }
     components: {
       codeBlock: {
+        title: (lang: string | undefined) => string
         copyButton: {
-          title: (lang: string | undefined) => string
           tooltip: string
           copiedTooltip: string
         }
@@ -29,5 +29,10 @@ export interface Translations {
         }
       }
     }
+  }
+  notFoundPage: {
+    title: string
+    funMessage: string
+    message: string
   }
 }

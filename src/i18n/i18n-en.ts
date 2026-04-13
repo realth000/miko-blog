@@ -4,25 +4,25 @@ export const i18nEn: Translations = {
   siteName: 'SiteName',
   navBar: {
     theme: {
-      dark: 'Dark',
-      light: 'Light',
-      followSystem: 'Follow system',
+      dark: 'Theme: Dark',
+      light: 'Theme: Light',
+      followSystem: 'Theme: Follow system',
     },
     articles: 'Articles',
     projects: 'Projects',
     about: 'About',
   },
-  acticlePage: {
+  articlePage: {
     tableOfContents: {
       title: 'Table of Contents',
     },
     components: {
       codeBlock: {
+        title: function (_lang: string | undefined): string {
+          return 'CodeBlock'
+          // return lang === undefined ? 'CodeBlock' : `CodeBlock (${lang})`
+        },
         copyButton: {
-          title: function (_lang: string | undefined): string {
-            return 'CodeBlock'
-            // return lang === undefined ? 'CodeBlock' : `CodeBlock (${lang})`
-          },
           tooltip: 'Copy code',
           copiedTooltip: 'Copied',
         },
@@ -34,5 +34,10 @@ export const i18nEn: Translations = {
         },
       },
     },
+  },
+  notFoundPage: {
+    title: 'Page not found',
+    funMessage: 'The page is lost in the universe, no one knowns where it is',
+    message: 'The page you visiting does not exist, please check the url',
   },
 }

@@ -1,8 +1,7 @@
 import { IconCheck, IconCode, IconCopy } from '@tabler/icons-react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useId, useState } from 'react'
 import { getI18n } from '@/i18n/i18n-context'
 import { log } from '@/log'
-import { hashObject } from '@/utils/encoding'
 import type { ReactElement } from 'react'
 
 function extractClassName(child: ReactElement): string | undefined {
@@ -15,7 +14,7 @@ function extractClassName(child: ReactElement): string | undefined {
 }
 
 function CopyButton({ codeBlockId }: { codeBlockId: string }) {
-  const tr = getI18n().acticlePage.components.codeBlock.copyButton
+  const tr = getI18n().articlePage.components.codeBlock.copyButton
 
   const [justCopied, setJustCopied] = useState(false)
 
@@ -49,7 +48,7 @@ function CopyButton({ codeBlockId }: { codeBlockId: string }) {
               }
 
               navigator.clipboard
-                .writeText(code.trim())
+                .writeText(code.replace(/\n$/, ''))
                 .then(() => {
                   setJustCopied(true)
                 })
@@ -70,13 +69,13 @@ export default function CodeBlock({
 }: {
   child: ReactElement
 }) {
-  const tr = getI18n().acticlePage.components.codeBlock
+  const tr = getI18n().articlePage.components.codeBlock
 
   let cls = extractClassName(child)?.trim() ?? ''
   const lang = cls.startsWith('language-')
     ? cls.replace('language-', '')
     : undefined
-  const codeBlockId = `codeblock-${hashObject(child)}`
+  const codeBlockId = `codeblock-${useId()}`
 
   cls += ' ' + codeBlockId
 
@@ -89,10 +88,10 @@ export default function CodeBlock({
             <IconCode className="text-secondary"></IconCode>
             <div className="flex items-start gap-2">
               <div className="text-secondary pl-2 text-lg font-bold">
-                {tr.copyButton.title(lang)}
+                {tr.title(lang)}
               </div>
               {lang !== undefined && lang.length > 1 && (
-                <div className="bg-tertiary-container/60 text-on-tertiary-container/60 rounded px-1 py-0.5 text-xs">
+                <div className="bg-tertiary-container text-on-tertiary-container rounded px-1 py-0.5 text-xs">
                   {lang}
                 </div>
               )}
@@ -102,7 +101,7 @@ export default function CodeBlock({
         </div>
       </div>
       {/* Code */}
-      <div className="bg-surface-container-low gap-2 overflow-x-scroll rounded-t-sm rounded-b-lg p-4 font-mono">
+      <div className="bg-surface-container gap-2 overflow-x-scroll rounded-t-sm rounded-b-lg p-4 font-mono">
         {React.cloneElement(child, {
           // @ts-expect-error Safe to assign class name here.
           className: cls,

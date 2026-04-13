@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react'
 import { findRoute, homePageTarget, notFoundPageTarget } from '@/router/router'
-import { fallbackToEn } from './i18n/i18n-context'
+import { setupI18n } from './i18n/i18n-context'
 import { log } from './log'
 import ThemeContext, { type ColorScheme } from './providers/theme-context'
 import { purifyUrl } from './utils/encoding'
@@ -144,6 +144,22 @@ export default function App() {
   })
 
   /**
+   * All the jobs we need to do when app initialized.
+   */
+  const onAppFirstInit = useEffectEvent(() => {
+    // Setup i18n.
+    setupI18n()
+
+    // Redirect to the correct page described by url.
+    // Here we should read the hash part of current url then redirect to
+    // the page if the url is not targeted to the default page (homepage).
+    const urlHash = globalThis.location.hash
+    if (urlHash.length > 0 && urlHash !== '/') {
+      onHashChanged()
+    }
+  })
+
+  /**
    * Handle url hash changes.
    *
    * Here the hash is raw hash in url, including hash (for routing) and anchor (for deep linking).
@@ -175,12 +191,7 @@ export default function App() {
   }, [theme, preferDark])
 
   useEffect(() => {
-    // Setup i18n.
-    const lang = navigator.language
-    if (!lang.toLocaleLowerCase().startsWith('zh')) {
-      // FIXME: Not works.
-      fallbackToEn()
-    }
+    onAppFirstInit()
   }, [])
 
   return (

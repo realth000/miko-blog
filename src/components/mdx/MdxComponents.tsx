@@ -1,4 +1,4 @@
-import { IconCopy, IconQuote } from '@tabler/icons-react'
+import { IconQuote } from '@tabler/icons-react'
 import React, { isValidElement, type ReactElement, type ReactNode } from 'react'
 import CodeBlock from './CodeBlock'
 import Heading from './Heading'
@@ -98,10 +98,6 @@ export const MDX_COMPONENTS: MDXComponents = {
         className="bg-surface-container-high rounded px-1 py-0.5 font-mono"
         {...props}
       >
-        <button className="pr-1">
-          {' '}
-          <IconCopy size={14}></IconCopy>
-        </button>
         {children}
       </code>
     )
@@ -230,7 +226,7 @@ export const MDX_COMPONENTS: MDXComponents = {
 
         return (
           <div className="flex items-center gap-1.5">
-            <div className="text-on-surface bg-surface-container-high rounded-sm px-0.75 py-0.5 text-xs">
+            <div className="text-secondary bg-outline-variant rounded-full px-1.5 py-0.5 text-xs select-none">
               {itemIndex}
             </div>
             <li className={cs.join(' ')} {...props}>
@@ -247,7 +243,7 @@ export const MDX_COMPONENTS: MDXComponents = {
         cs.splice(i, 1)
         return (
           <div className="flex items-center gap-2">
-            <div className="text-on-surface bg-surface-container-high rounded-full px-1 py-1"></div>
+            <div className="bg-outline-variant rounded-full px-1 py-1"></div>
             <li className={cs.join(' ')} {...props}>
               {children}
             </li>
@@ -260,7 +256,7 @@ export const MDX_COMPONENTS: MDXComponents = {
   blockquote: ({ children, ...props }) => {
     return (
       <blockquote
-        className="bg-surface-container border-tertiary-container my-article-paragraph rounded-lg px-4 py-2"
+        className="bg-surface-container my-article-paragraph rounded-lg px-4 py-2"
         {...props}
       >
         <div className="text-on-surface-variant">

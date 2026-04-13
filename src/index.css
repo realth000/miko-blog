@@ -239,7 +239,7 @@ body {
   --spacing-max-width-page: 80rem;
   --spacing-nav-bar-height: 3rem;
   --spacing-nav-bar-safe-area-height: calc(var(--spacing-nav-bar-height) + 8px);
-  --spacing-side-bar-width: 12rem;
+  --spacing-side-bar-width: 14rem;
 
   /* Article */
   --spacing-article-codeblock-padding: 4rem;
