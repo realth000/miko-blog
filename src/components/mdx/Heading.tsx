@@ -117,7 +117,14 @@ export default function Heading({
             setJustClicked(true)
             const s = globalThis.location.toString()
             const idx = s.lastIndexOf('#')
-            const fullLink = s.slice(0, idx) + '#' + anchor
+            // Note that the url [s] here may have or not have anchor.
+            // As we are using anchor urls here:
+            // "domain/#/articles/article_title" does not have anchor to remove.
+            // We should only remove anchors like "#foo" in "domain/#/articles/article_title#foo".
+            //
+            // Be careful to reserve the original '#' as hash url.
+            const fullLink =
+              (idx === s.indexOf('#') ? s : s.slice(0, idx)) + '#' + anchor
             navigator.clipboard.writeText(fullLink).catch((error: unknown) => {
               log('failed to copy heading url to clipboard', error)
             })
