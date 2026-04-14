@@ -8,12 +8,12 @@ export default function Scaffold({
   readonly children: ReactNode
 }) {
   return (
-    <>
+    <div className="gap-8">
       <NavBar />
       <div className="pt-nav-bar-safe-area-height max-w-max-width-page mx-auto flex w-full gap-6 px-2">
         {children}
       </div>
       <Footer />
-    </>
+    </div>
   )
 }

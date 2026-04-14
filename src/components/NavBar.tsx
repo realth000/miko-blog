@@ -14,7 +14,7 @@ function ThemeButton() {
   const tr = getI18n().navBar.theme
 
   return (
-    <button onClick={toggleTHeme}>
+    <button onClick={toggleTHeme} className="hover:text-primary">
       {theme == 'light' ? (
         <IconSun title={tr.light} />
       ) : theme == 'dark' ? (
@@ -33,16 +33,31 @@ export default function NavBar() {
     <header className="h-nav-bar-height border-outline-variant bg-surface-container-low/80 fixed top-0 right-0 left-0 flex gap-6 px-4 py-3 shadow-sm backdrop-blur-sm">
       <div className="mr-auto ml-0 flex max-w-6xl items-center justify-between gap-6">
         <div className="shrink-0">
-          <a href="/">{getI18n().siteName}</a>
+          <a
+            href="#/"
+            className="text-on-surface hover:text-primary text-xl font-bold"
+          >
+            {getI18n().siteName}
+          </a>
         </div>
       </div>
       <div>
         <ThemeButton />
       </div>
       <div className="flex gap-2">
-        <a href="#/articles">{tr.articles}</a>
-        <a href="#/projects">{tr.projects}</a>
-        <a href="#/about">{tr.about}</a>
+        {[
+          [tr.articles, '#/articles'],
+          [tr.projects, '#/projects'],
+          [tr.about, '#/about'],
+        ].map((tab) => (
+          <a
+            key={tab.at(1)}
+            href={tab.at(1)}
+            className="hover:text-primary text-on-surface"
+          >
+            {tab.at(0)}
+          </a>
+        ))}
       </div>
     </header>
   )

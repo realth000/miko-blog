@@ -256,7 +256,7 @@ export const MDX_COMPONENTS: MDXComponents = {
   blockquote: ({ children, ...props }) => {
     return (
       <blockquote
-        className="bg-surface-container my-article-paragraph rounded-lg px-4 py-2"
+        className="bg-surface-container my-article-paragraph rounded-xl px-4 py-2"
         {...props}
       >
         <div className="text-on-surface-variant">

@@ -35,7 +35,7 @@ function CopyButton({ codeBlockId }: { codeBlockId: string }) {
   return (
     <button
       title={justCopied ? tr.copiedTooltip : tr.tooltip}
-      className={`${justCopied ? 'text-primary' : 'hover:text-primary hover:bg-surface-container-high'} flex h-11 w-11 items-center justify-center rounded-lg`}
+      className={`${justCopied ? 'text-primary' : 'hover:text-primary hover:bg-surface-container-high'} flex h-11 w-11 items-center justify-center rounded-xl`}
       onClick={
         justCopied
           ? undefined
@@ -82,7 +82,7 @@ export default function CodeBlock({
   return (
     <div {...props}>
       {/* Language info */}
-      <div className="text-on-surface-variant bg-surface-container-low mb-0.5 rounded-t-lg rounded-b-sm">
+      <div className="text-on-surface-variant bg-surface-container-low mb-0.5 rounded-t-xl rounded-b-sm">
         <div className="flex items-center">
           <div className="mr-auto ml-0 flex py-2 pl-4">
             <IconCode className="text-secondary"></IconCode>
@@ -91,7 +91,7 @@ export default function CodeBlock({
                 {tr.title(lang)}
               </div>
               {lang !== undefined && lang.length > 1 && (
-                <div className="bg-tertiary-container text-on-tertiary-container rounded px-1 py-0.5 text-xs">
+                <div className="bg-secondary-container text-secondary rounded px-1.5 py-0.5 text-[10px] font-bold tracking-wider uppercase">
                   {lang}
                 </div>
               )}
@@ -101,7 +101,7 @@ export default function CodeBlock({
         </div>
       </div>
       {/* Code */}
-      <div className="bg-surface-container gap-2 overflow-x-scroll rounded-t-sm rounded-b-lg p-4 font-mono">
+      <div className="bg-surface-container gap-2 overflow-x-scroll rounded-t-sm rounded-b-xl p-4 font-mono">
         {React.cloneElement(child, {
           // @ts-expect-error Safe to assign class name here.
           className: cls,
