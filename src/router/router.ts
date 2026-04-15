@@ -1,3 +1,4 @@
+import { getI18n } from '@/i18n/i18n-context'
 import { log } from '@/log'
 import AboutPage from '@/pages/AboutPage'
 import HomePage from '@/pages/HomePage'
@@ -26,18 +27,18 @@ const appRoutes: Routes = [
   homePageTarget,
   {
     path: '/articles',
-    title: 'Articles',
+    title: getI18n().navBar.articles,
     component: ArticlesPage,
     children: articleDynamicRoute,
   },
   {
     path: '/projects',
-    title: 'Projects',
+    title: getI18n().navBar.projects,
     component: ProjectsPage,
   },
   {
     path: '/about',
-    title: 'About',
+    title: getI18n().navBar.about,
     component: AboutPage,
   },
 ]

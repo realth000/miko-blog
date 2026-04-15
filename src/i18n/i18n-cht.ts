@@ -12,6 +12,10 @@ export const i18nCht: Translations = {
     projects: '專案',
     about: '關於',
   },
+  homePage: {
+    articles: '阅读文章',
+    projects: '查看專案',
+  },
   articlePage: {
     tableOfContents: {
       title: '目錄',

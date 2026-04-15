@@ -12,6 +12,10 @@ export const i18nEn: Translations = {
     projects: 'Projects',
     about: 'About',
   },
+  homePage: {
+    articles: 'Read articles',
+    projects: 'See projects',
+  },
   articlePage: {
     tableOfContents: {
       title: 'Table of Contents',

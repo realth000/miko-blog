@@ -10,6 +10,10 @@ export interface Translations {
     projects: string
     about: string
   }
+  homePage: {
+    articles: string
+    projects: string
+  }
   articlePage: {
     tableOfContents: {
       title: string
