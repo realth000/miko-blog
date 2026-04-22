@@ -1,5 +1,6 @@
 import Scaffold from '@/components/Scaffold'
 import { getI18n } from '@/i18n/i18n-context'
+import configValue from '@/values/config-value'
 
 export default function HomePage() {
   const tr = getI18n().homePage
@@ -8,10 +9,10 @@ export default function HomePage() {
     <Scaffold>
       <div className="my-32 flex h-full w-full flex-col items-center justify-center gap-12">
         <h1 className="text-primary text-shadow-primary/40 text-4xl font-black tracking-tighter antialiased text-shadow-lg md:text-6xl">
-          Site name here
+          {configValue.siteName}
         </h1>
         <h2 className="text-secondary/80 my-3 max-w-prose text-lg leading-relaxed font-medium tracking-wide md:text-xl">
-          Slogan here (10 - 20 words)
+          {configValue.slogan}
         </h2>
         <div className="flex gap-4">
           <a

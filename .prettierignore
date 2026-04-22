@@ -4,3 +4,5 @@ build
 coverage
 *.min.js
 pnpm-lock.yaml
+/src/values/*.ts
+!/src/values/*.example.ts
