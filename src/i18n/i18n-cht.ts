@@ -44,4 +44,10 @@ export const i18nCht: Translations = {
     funMessage: '當前頁面在宇宙中漂泊，不知道到哪裡去了',
     message: '您想訪問的頁面不存在，請檢查 URL 是否正確。',
   },
+  articlesPage: {
+    title: '文章',
+  },
+  projectsPage: {
+    title: '專案',
+  },
 }

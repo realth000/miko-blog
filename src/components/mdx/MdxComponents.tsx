@@ -104,7 +104,7 @@ export const MDX_COMPONENTS: MDXComponents = {
   },
   pre: ({ children, ...props }) => {
     return (
-      <pre {...props}>
+      <pre className="my-article-paragraph" {...props}>
         {React.Children.map(children, (child) => {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           if (!isValidElement(child)) {
@@ -220,13 +220,16 @@ export const MDX_COMPONENTS: MDXComponents = {
         return false
       })
 
+      cs.splice(i, 1)
+      cs.push('w-full') // Make the list expand in horizontal direction.
+
       if (itemIndex != undefined && i !== -1) {
         // In il
-        cs.splice(i, 1)
 
         return (
-          <div className="flex items-center gap-1.5">
-            <div className="text-secondary bg-outline-variant rounded-full px-1.5 py-0.5 text-xs select-none">
+          // Use `items-start` to align the item at top for multiline contents.
+          <div className="flex items-start gap-1.5">
+            <div className="text-secondary bg-outline-variant mt-0.5 rounded-full px-1.5 py-0.5 text-xs select-none">
               {itemIndex}
             </div>
             <li className={cs.join(' ')} {...props}>
@@ -240,10 +243,11 @@ export const MDX_COMPONENTS: MDXComponents = {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (itemUl && i !== -1) {
         // In ul
-        cs.splice(i, 1)
+
         return (
-          <div className="flex items-center gap-2">
-            <div className="bg-outline-variant rounded-full px-1 py-1"></div>
+          // Use `items-start` to align the item at top for multiline contents.
+          <div className="flex items-start gap-1.5">
+            <div className="bg-outline-variant mt-2 rounded-full px-1 py-1"></div>
             <li className={cs.join(' ')} {...props}>
               {children}
             </li>

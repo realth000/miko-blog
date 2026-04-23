@@ -5,7 +5,7 @@ import type { ReactNode } from 'react'
 export default function Scaffold({
   children,
 }: {
-  readonly children: ReactNode
+  readonly children?: ReactNode
 }) {
   return (
     <div className="gap-8">

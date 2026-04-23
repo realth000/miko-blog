@@ -3,6 +3,8 @@
 !/src/pages/generated/.gitkeep
 /src/values/*.ts
 !/src/values/*.example.ts
+/src/values/*.mdx
+!/src/values/*.example.mdx
 
 # Logs
 logs

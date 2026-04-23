@@ -44,4 +44,10 @@ export const i18nEn: Translations = {
     funMessage: 'The page is lost in the universe, no one knowns where it is',
     message: 'The page you visiting does not exist, please check the url',
   },
+  articlesPage: {
+    title: 'Articles',
+  },
+  projectsPage: {
+    title: 'Projects',
+  },
 }

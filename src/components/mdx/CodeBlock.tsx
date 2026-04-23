@@ -35,7 +35,7 @@ function CopyButton({ codeBlockId }: { codeBlockId: string }) {
   return (
     <button
       title={justCopied ? tr.copiedTooltip : tr.tooltip}
-      className={`${justCopied ? 'text-primary' : 'hover:text-primary hover:bg-surface-container-high'} flex h-11 w-11 items-center justify-center rounded-xl`}
+      className={`${justCopied ? 'text-primary' : 'hover:text-primary hover:bg-surface-container-high'} flex h-11 w-11 items-center justify-center rounded-t-xl rounded-br-sm rounded-bl-xl`}
       onClick={
         justCopied
           ? undefined

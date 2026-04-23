@@ -1,8 +1,9 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { escapeSingleQuote } from './shared/escape-string.ts'
-import { log, fatal } from './shared/log.ts'
+import { log, fatal, warn } from './shared/log.ts'
 import { parseMdxTableOfContent } from './shared/parse-mdx-toc.ts'
+import type { MdxContentTable } from './shared/mdx-content-table.ts'
 
 /**
  * Doc input info
@@ -51,11 +52,11 @@ if (!fs.existsSync(docInputDir)) {
 }
 
 if (!fs.existsSync(docOutputDir)) {
-  fatal(`doc output directory ${docOutputDir} not exits`)
+  fatal(`doc output directory ${docOutputDir} not exists`)
 }
 
 if (!fs.existsSync(docTsxTemplageFile)) {
-  fatal(`doc tsx template file ${docTsxTemplageFile} not exsts`)
+  fatal(`doc tsx template file ${docTsxTemplageFile} not exists`)
 }
 
 function walkSync(dir: string): DocInputInfo[] {
@@ -235,3 +236,38 @@ const articlesPageString = articlesTemplateString.replace(
 )
 
 fs.writeFileSync(articlesFile, articlesPageString)
+
+log('generating about page')
+
+const aboutMeDocFile = './src/values/about.mdx'
+const aboutMeExampleDocFile = './src/values/about.example.mdx'
+
+let aboutMeContent: { toc: MdxContentTable; doc: string }
+
+if (fs.existsSync(aboutMeDocFile)) {
+  aboutMeContent = parseMdxTableOfContent(aboutMeDocFile)
+} else if (fs.existsSync(aboutMeExampleDocFile)) {
+  aboutMeContent = parseMdxTableOfContent(aboutMeExampleDocFile)
+  warn(
+    `about me doc not exists at ${aboutMeDocFile}, using the example document`,
+  )
+} else {
+  fatal(
+    `no available about me doc found. Write your own doc at ${aboutMeDocFile} and run this command again`,
+  )
+  throw new Error('unreachable; To make the compiler happy.')
+}
+
+fs.writeFileSync(path.join(docOutputDir, 'about.mdx'), aboutMeContent.doc)
+
+const aboutMeTemplateString = fs.readFileSync(
+  './src/pages/AboutPage.template.tsx',
+  'utf8',
+)
+const aboutMePageString = aboutMeTemplateString
+  .replace('// @@DOC_IMPORT_PATH@@', "import Doc from './about.mdx'")
+  .replace(/{\/\* @@DOC_CONTENT@@ \*\/}/, '<Doc components={MDX_COMPONENTS}/>')
+
+fs.writeFileSync(path.join(docOutputDir, `AboutPage.tsx`), aboutMePageString)
+
+log('generated about page')

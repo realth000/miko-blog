@@ -1,0 +1,85 @@
+# Sample about page
+
+Edit and save your own about page content in `about.mdx`.
+
+## Introduction
+
+This is a blog built with [miko-blog](https://github.com/realth000/miko-blog).
+
+miko-blog is:
+
+- a toy static site generator.
+- for generating static blogs from `mdx` files.
+- based on `react`, `typescript`, `mdx.js`, with as less dependencies as possible.
+
+For `mdx` contents:
+
+- Each `mdx` file serves as an article.
+- Each article has a series of tags describe its content.
+- miko-blog also provides projects show page for your work.
+
+## Usage
+
+Follow these steps to use miko-blog:
+
+1. Configure the blog info in `src/values/config-values.ts`.
+   - See `src/values/config-values.example.ts` for example.
+2. Prepare blog articles. Each article should be named `index.mdx` in a subdir in `src/contents`, together with a json config file in the same directory.
+   - Directory structure for a article.
+     ```console
+     src/contents
+     └── sample
+         ├── config.json
+         └── index.mdx
+     ```
+   - Example `config.json`:
+     ```json
+     {
+       "title": "Sample",
+       "summary": "Sample document",
+       "date": "2026-01-01",
+       "tags": ["mdx", "sample blog"],
+       "draft": false
+     }
+     ```
+   - The directory name can be anything not only the article name, e.g. name the folder `001-sample` for sorted order.
+3. Run `pnpm gen-doc` to run code generation.
+4. Run `pnpm dev` to build and serve your blog.
+
+## Styles showcase
+
+**bold text**
+
+_italic text_
+
+**_bold and italic text_**
+
+[url](https://github.ciom/realth000/miko-blog)
+
+inline `codeblock`.
+
+```console
+multiline
+
+codeblock
+```
+
+ordered list:
+
+1. foo
+2. bar
+3. baz
+
+bullet list:
+
+- foo
+- bar
+- baz
+
+divider:
+
+---
+
+> Quoted block
+>
+> The quick brown fox jumps over the lazy dog

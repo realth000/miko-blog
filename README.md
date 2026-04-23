@@ -13,52 +13,47 @@ Toy level static blog generator.
 - Page and route generation for articles.
 - Intend to be lightweight.
   - Depdends on `react` + `@mdx-js` + `eslint` + `typescript`.
-  - No third-party dependencies for routing, state management, animation and UI.
+  - No third-party dependencies for routing, state management, animation and UI components.
 
 ## Prerequisites
 
 - nodejs (>= 24.10.1)
 - pnpm
-- eslint
+- (optional) vscode eslint plugin.
 
 ## Usage
 
-For each post, the article file should be named `index.mdx` and paired with a config file `config.json` in a separate folder in `src/contents/`.
+Follow these steps to use miko-blog:
 
-Sample document:
+1. Configure the blog info in `src/values/config-values.ts`.
+   - See [src/values/config-values.example.ts](./src/values/config-values.example.ts) for example.
+2. Prepare blog articles. Each article should be named `index.mdx` in a subdir in `src/contents`, together with a json config file in the same directory.
+   - Directory structure for a article.
 
-```mdx
-export function Thing() {
-  return <>World</>
-}
+     ```console
+     src/contents
+     └── sample
+         ├── config.json
+         └── index.mdx
+     ```
 
-# Hello <Thing />
-```
+   - Example `config.json`:
 
-Sample config:
+     ```json
+     {
+       "title": "Sample",
+       "summary": "Sample document",
+       "date": "2026-01-01",
+       "tags": ["mdx", "sample blog"],
+       "draft": false
+     }
+     ```
 
-```json
-{
-  "title": "Sample page",
-  "date": "2026-01-01",
-  "tags": ["sample", "mdx", "react"],
-  "draft": false
-}
-```
+   - The directory name can be anything not only the article name, e.g. name the folder `001-sample` for sorted order.
+3. Run `pnpm gen-doc` to run code generation.
+4. Run `pnpm dev` to build and serve your blog.
 
-The contents folder looks like:
-
-```console
-./src/contents
-├── sample
-│   ├── config.json
-│   └── index.mdx
-└── sample2
-    ├── config.json
-    └── index.mdx
-```
-
-Run codegen to generate pages and routes for all non-draft articles:
+## Development
 
 ```bash
 # Install dependencies
@@ -72,9 +67,6 @@ pnpm dev
 
 # Lint
 pnpm lint
-
-# (Optional) Lint all files, including generated ones.
-pnpm lint:all
 ```
 
 ## Unsupported features

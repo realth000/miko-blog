@@ -39,4 +39,10 @@ export interface Translations {
     funMessage: string
     message: string
   }
+  articlesPage: {
+    title: string
+  }
+  projectsPage: {
+    title: string
+  }
 }
