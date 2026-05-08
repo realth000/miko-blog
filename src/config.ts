@@ -18,6 +18,16 @@ export interface MikoConfig {
   projects: MikoProject[]
 
   /**
+   * All friends website records.
+   */
+  friends: MikoFriends[]
+
+  /**
+   * Invitation url for friends website.
+   */
+  friendsInviteUrl: string
+
+  /**
    * Path to the document served as about me.
    */
   aboutMeDocumentPath: string
@@ -57,6 +67,26 @@ export interface MikoProject {
    * e.g. ["Typescript", "UI", "React"]
    */
   tags: string[]
+}
+
+/**
+ * Friends website records.
+ */
+export interface MikoFriends {
+  /**
+   * Website name.
+   */
+  site_name: string
+
+  /**
+   * Website description.
+   */
+  description: string
+
+  /**
+   * Website url.
+   */
+  url: string
 }
 
 export function defineConfig(config: MikoConfig): MikoConfig {

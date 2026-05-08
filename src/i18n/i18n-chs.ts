@@ -10,6 +10,8 @@ export const i18nChs: Translations = {
     },
     articles: '文章',
     projects: '项目',
+    friends: '朋友',
+    whisper: '细语',
     about: '关于',
   },
   homePage: {
@@ -49,5 +51,14 @@ export const i18nChs: Translations = {
   },
   projectsPage: {
     title: '项目',
+  },
+  friendsPage: {
+    title: '朋友',
+    details: '赛博朋友们',
+    invite: '添加友链请点击此处联系',
+  },
+  whisperPage: {
+    title: '细语',
+    details: '闲言碎语，只当朝花夕拾',
   },
 }

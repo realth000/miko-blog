@@ -6,6 +6,11 @@
 /src/values/*.mdx
 !/src/values/*.example.mdx
 
+# Website logo
+/src/assets/logo.png
+# Favicon
+/public/logo.svg
+
 # Logs
 logs
 *.log

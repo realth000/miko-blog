@@ -27,5 +27,16 @@ export default defineConfig({
   },
   build: {
     target: 'es2020',
+    rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.names.some((n) => n.includes('logo'))) {
+            return 'assets/[name][extname]'
+          }
+
+          return 'assets/[name]_[hash][extname]'
+        },
+      },
+    },
   },
 })

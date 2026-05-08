@@ -154,6 +154,7 @@ for (const [i, doc] of docs.entries()) {
           /{\/\* @@DOC_CONTENT@@ \*\/}/,
           '<Doc components={MDX_COMPONENTS}/>',
         )
+        .replace('// @ts-expect-error Not used in template', '') // The report here is unused after codegen, remove it.
 
     fs.writeFileSync(
       path.join(docOutputDir, `${component}.tsx`),
@@ -265,6 +266,7 @@ const aboutMeTemplateString = fs.readFileSync(
   'utf8',
 )
 const aboutMePageString = aboutMeTemplateString
+  .replace('// @ts-expect-error Not used in template', '') // The report not works anymore after codegen, remove it.
   .replace('// @@DOC_IMPORT_PATH@@', "import Doc from './about.mdx'")
   .replace(/{\/\* @@DOC_CONTENT@@ \*\/}/, '<Doc components={MDX_COMPONENTS}/>')
 

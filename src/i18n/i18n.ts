@@ -8,6 +8,8 @@ export interface Translations {
     }
     articles: string
     projects: string
+    friends: string
+    whisper: string
     about: string
   }
   homePage: {
@@ -44,5 +46,14 @@ export interface Translations {
   }
   projectsPage: {
     title: string
+  }
+  friendsPage: {
+    title: string
+    details: string
+    invite: string
+  }
+  whisperPage: {
+    title: string
+    details: string
   }
 }

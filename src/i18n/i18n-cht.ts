@@ -10,6 +10,8 @@ export const i18nCht: Translations = {
     },
     articles: '文章',
     projects: '專案',
+    friends: '朋友',
+    whisper: '細語',
     about: '關於',
   },
   homePage: {
@@ -49,5 +51,14 @@ export const i18nCht: Translations = {
   },
   projectsPage: {
     title: '專案',
+  },
+  friendsPage: {
+    title: '朋友',
+    details: '賽博朋友們',
+    invite: '新增友鏈請点击此处聯絡',
+  },
+  whisperPage: {
+    title: '細語',
+    details: '閒言碎語，只當朝花夕拾',
   },
 }

@@ -1,8 +1,10 @@
 import { getI18n } from '@/i18n/i18n-context'
 import { log } from '@/log'
+import FriendsPage from '@/pages/FriendsPage'
 import HomePage from '@/pages/HomePage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import ProjectsPage from '@/pages/ProjectsPage'
+import WhisperPage from '@/pages/WhisperPage'
 import AboutPage from '@/pages/generated/AboutPage'
 import ArticlesPage from '@/pages/generated/ArticlesPage'
 import articleDynamicRoute from '@/pages/generated/article-dynamic-route'
@@ -35,6 +37,16 @@ const appRoutes: Routes = [
     path: '/projects',
     title: getI18n().navBar.projects,
     component: ProjectsPage,
+  },
+  {
+    path: '/friends',
+    title: getI18n().navBar.friends,
+    component: FriendsPage,
+  },
+  {
+    path: '/whisper',
+    title: getI18n().navBar.whisper,
+    component: WhisperPage,
   },
   {
     path: '/about',

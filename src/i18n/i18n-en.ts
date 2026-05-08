@@ -10,6 +10,8 @@ export const i18nEn: Translations = {
     },
     articles: 'Articles',
     projects: 'Projects',
+    friends: 'Friends',
+    whisper: 'Whisper',
     about: 'About',
   },
   homePage: {
@@ -49,5 +51,14 @@ export const i18nEn: Translations = {
   },
   projectsPage: {
     title: 'Projects',
+  },
+  friendsPage: {
+    title: 'Friends',
+    details: 'Friends in cyber world',
+    invite: 'To exchange as friends website, contact me via here',
+  },
+  whisperPage: {
+    title: 'Whisper',
+    details: 'Words for yesterday once more',
   },
 }
