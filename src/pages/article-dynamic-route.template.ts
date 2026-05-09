@@ -1,4 +1,6 @@
-// @@DOC_IMPORT_PATHS@@
+// @ts-expect-error Not used in template
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { lazy } from 'react'
 import { type DynamicRoute, type PageInfo } from '@/router/routes'
 
 const articleDynamicRoute: DynamicRoute = (page: string) => {

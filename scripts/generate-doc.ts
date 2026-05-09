@@ -189,27 +189,19 @@ const articleDynamicRouteFile = path.join(
 )
 const articleDynamicRouteString = articleTemplateRouteString
   .replace(
-    '// @@DOC_IMPORT_PATHS@@',
-    dynamicRoutes
-      .map(
-        (r) =>
-          `import ${r.component} from '@/pages/generated/${r.component}.tsx'`,
-      )
-      .join('\n'),
-  )
-  .replace(
     '// @@DOC_PATHS@@',
     dynamicRoutes
       .map(
         (r) => `{
       path: '${r.path}',
       title: '${escapeSingleQuote(r.title)}',
-      component: ${r.component},
+      component: lazy(() => import('@/pages/generated/${r.component}.tsx')),
     },`,
       )
       .join('\n    ')
       .trim(),
   )
+  .replace('// @ts-expect-error Not used in template', '') // The report not works anymore after codegen, remove it.
 
 fs.writeFileSync(articleDynamicRouteFile, articleDynamicRouteString)
 
