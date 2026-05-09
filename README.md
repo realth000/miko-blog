@@ -8,26 +8,25 @@ Toy level static blog generator.
 
 ## Features
 
-- Articles in `mdx` format by using `@mdx-js`.
+- Articles in `mdx` format.
 - Support GitHub pages, serve as a single page application.
-- Page and route generation for articles.
-- Intend to be lightweight.
-  - Depdends on `react` + `@mdx-js` + `eslint` + `typescript`.
+- Page and route generation.
+- Lightweight.
+  - Depdends on `react` + `@mdx-js` + `eslint` + `typescript` + `tailwindcss`.
   - No third-party dependencies for routing, state management, animation and UI components.
 
 ## Prerequisites
 
-- nodejs (>= 24.10.1)
+- nodejs (>= 25.6.2)
 - pnpm
-- (optional) vscode eslint plugin.
+- (For develop) vscode eslint plugin.
+  - Plugin id: `dbaeumer.vscode-eslint`, `esbenp.prettier-vscode`.
 
 ## Usage
 
-Follow these steps to use miko-blog:
-
-1. Configure the blog info in `src/values/config-values.ts`.
-   - See [src/values/config-values.example.ts](./src/values/config-values.example.ts) for example.
-2. Prepare blog articles. Each article should be named `index.mdx` in a subdir in `src/contents`, together with a json config file in the same directory.
+1. Setup the website info in `src/values/config-values.ts`.
+   - See [src/values/config-value.example.ts](./src/values/config-value.example.ts).
+2. Prepare blog articles. Each article should be named `index.mdx` in a subdir in `src/contents`, together with a `config.json` file.
    - Directory structure for a article.
 
      ```console
@@ -37,7 +36,7 @@ Follow these steps to use miko-blog:
          └── index.mdx
      ```
 
-   - Example `config.json`:
+   - e.g. `config.json`:
 
      ```json
      {
@@ -49,9 +48,14 @@ Follow these steps to use miko-blog:
      }
      ```
 
-   - The directory name can be anything not only the article name, e.g. name the folder `001-sample` for sorted order.
-3. Run `pnpm gen-doc` to run code generation.
-4. Run `pnpm dev` to build and serve your blog.
+   - The directory name is not required to be the same as article title.
+3. Preapre `about.mdx` and `whispers.mdx` in `./src/values/` for additional pages.
+   - No document format requirements in these documents.
+4. Prepare website favicon in `assets/logo.png` and `assets/logo.svg`
+5. Run `pnpm gen-doc` to generate code.
+   - Rerun `pnpm gen-doc` every time the articles changed.
+6. Run `pnpm dev` to serve.
+7. Run `pnpm build` to package all files in `./src/dist` folder.
 
 ## Development
 
@@ -67,6 +71,9 @@ pnpm dev
 
 # Lint
 pnpm lint
+
+# Packaging, artifacts in ./src/dist directory.
+pnpm build
 ```
 
 ## Unsupported features
