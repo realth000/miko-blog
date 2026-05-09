@@ -1,7 +1,17 @@
 import type { ReactNode } from 'react'
 
-export default function Article({ children }: { children?: ReactNode }) {
+export default function Article({
+  children,
+  enableMxAuto = true,
+}: {
+  children?: ReactNode
+  enableMxAuto?: boolean
+}) {
   return (
-    <main className="max-w-max-width-content mx-auto flex-1">{children}</main>
+    <main
+      className={`max-w-max-width-content flex-1 ${enableMxAuto ? 'mx-auto' : ''}`}
+    >
+      {children}
+    </main>
   )
 }

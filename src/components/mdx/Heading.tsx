@@ -94,6 +94,17 @@ export default function Heading({
     }
   }, [justClicked])
 
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
+  if (title?.toString().length === 0) {
+    // No anchor provided.
+    return (
+      <div className={finalClassName} {...props}>
+        {// eslint-disable-next-line @typescript-eslint/no-base-to-string
+        children?.toString()}
+      </div>
+    )
+  }
+
   return (
     <>
       <Tag

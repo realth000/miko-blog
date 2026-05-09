@@ -12,7 +12,7 @@ export default function WhisperPage() {
     <Scaffold>
       <ColumnLayout className="gap-y-4">
         <h1 className="my-2 text-2xl font-bold md:text-4xl">{tr.title}</h1>
-        <Article>
+        <Article enableMxAuto={false}>
           <Doc components={MDX_COMPONENTS} />
         </Article>
       </ColumnLayout>
