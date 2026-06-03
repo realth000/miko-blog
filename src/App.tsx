@@ -60,11 +60,12 @@ export default function App() {
    */
   const prevHashAndAnchor = useRef('')
 
-  const onScrollToElementRequired = useEffectEvent((hash: string) => {
+  const onScrollToElementRequired = useEffectEvent((rawHash: string) => {
     // Only scroll into view by id
     //
     // When user clicked links with href `#foo` then scroll to foo,
     // where foo is already in the page, just do the scrolling.
+    const hash = decodeURI(rawHash)
 
     let newHash: string
     if (prevHashAndAnchor.current.length === 0) {
@@ -89,8 +90,12 @@ export default function App() {
     )
     globalThis.history.replaceState({}, '', `/#${newHash}`)
 
-    const elementId = '#' + hash
-    const targetElement = document.querySelector(elementId)
+    const elementId = hash
+    // Title anchor id may contain characters that need to be escaped when used in
+    // a general css selector. Here using `getElementById` directly is much more
+    // intuitive.
+    // eslint-disable-next-line unicorn/prefer-query-selector
+    const targetElement = document.getElementById(elementId)
     if (!targetElement) {
       log(
         `failed to scroll to element with hash id ${elementId}: element not found`,

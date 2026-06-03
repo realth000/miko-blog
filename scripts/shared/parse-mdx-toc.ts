@@ -14,7 +14,10 @@ import type { MdxContentTable } from './mdx-content-table'
  * @param filePath path to the mdx file.
  * @returns table of contents and updated document text.
  */
-export function parseMdxTableOfContent(filePath: string): {
+export function parseMdxTableOfContent(
+  filePath: string,
+  useHashAnchors: boolean,
+): {
   toc: MdxContentTable
   doc: string
 } {
@@ -42,10 +45,12 @@ export function parseMdxTableOfContent(filePath: string): {
         return
       }
 
-      const anchorId = hashObjectInCli(line)
+      const anchorId = useHashAnchors
+        ? hashObjectInCli(line)
+        : line.replace(/#+ +/, '').trim() //encodeURI(line)
 
       // Inject anchor id hash in js block.
-      doc.push(`${line.trim()}{${anchorId}}`)
+      doc.push(`${line.trim()}{'${anchorId}'}`)
 
       return {
         level: reResult.groups.level.length,

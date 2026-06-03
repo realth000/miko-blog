@@ -6,6 +6,6 @@ if (process.argv.length < 3) {
 }
 
 const filePath = process.argv[2]
-const contents = parseMdxTableOfContent(filePath)
+const contents = parseMdxTableOfContent(filePath, false)
 
 log(contents)

@@ -6,6 +6,27 @@ import { parseMdxTableOfContent } from './shared/parse-mdx-toc.ts'
 import type { MdxContentTable } from './shared/mdx-content-table.ts'
 
 /**
+ * Allow using js in article titles.
+ *
+ * Because artiles are written in `mdx` format, it is possible
+ * to use js in markdown titles. If so, when generating unique
+ * anchor for titles, those js code are opaque during codegen,
+ * causing unconsistent or duplicate anchor urls.
+ *
+ * When this field is set to true, the generator will try to
+ * generate readable anchor links, or number hashes when set
+ * to false, if you are using js in article titles.
+ */
+
+let allowJsInArticleTitles = false
+
+for (const arg of process.argv) {
+  if (arg === '--allowJsInArticleTitles') {
+    allowJsInArticleTitles = true
+  }
+}
+
+/**
  * Doc input info
  */
 interface DocInputInfo {
@@ -123,6 +144,7 @@ for (const [i, doc] of docs.entries()) {
     // The `updatedDoc` is injected with anchor ids for deep linking.
     const { toc: tableOfContents, doc: updatedDoc } = parseMdxTableOfContent(
       doc.docPath,
+      allowJsInArticleTitles,
     )
     fs.writeFileSync(path.join(docOutputDir, `${component}.mdx`), updatedDoc)
 
@@ -238,9 +260,15 @@ const aboutMeExampleDocFile = './src/values/about.example.mdx'
 let aboutMeContent: { toc: MdxContentTable; doc: string }
 
 if (fs.existsSync(aboutMeDocFile)) {
-  aboutMeContent = parseMdxTableOfContent(aboutMeDocFile)
+  aboutMeContent = parseMdxTableOfContent(
+    aboutMeDocFile,
+    allowJsInArticleTitles,
+  )
 } else if (fs.existsSync(aboutMeExampleDocFile)) {
-  aboutMeContent = parseMdxTableOfContent(aboutMeExampleDocFile)
+  aboutMeContent = parseMdxTableOfContent(
+    aboutMeExampleDocFile,
+    allowJsInArticleTitles,
+  )
   warn(
     `about me doc not exists at ${aboutMeDocFile}, using the example document`,
   )
