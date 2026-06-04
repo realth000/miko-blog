@@ -1,4 +1,4 @@
-import { IconQuote } from '@tabler/icons-react'
+import { IconExternalLink, IconQuote } from '@tabler/icons-react'
 import React, { isValidElement, type ReactElement, type ReactNode } from 'react'
 import CodeBlock from './CodeBlock'
 import Heading from './Heading'
@@ -271,6 +271,17 @@ export const MDX_COMPONENTS: MDXComponents = {
           </div>
         </div>
       </blockquote>
+    )
+  },
+  a: ({ children, ...props }) => {
+    return (
+      <a
+        className="text-primary hover:bg-surface-container-high inline-flex rounded"
+        {...props}
+      >
+        {children}
+        <IconExternalLink size={14} />
+      </a>
     )
   },
 } as const
