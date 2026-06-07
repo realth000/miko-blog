@@ -12,6 +12,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
+    "download-treesitter": "node ./scripts/highlighter/downloader.ts",
     "gen-doc": "node ./scripts/generate-doc.ts"
   },
   "dependencies": {
@@ -51,6 +52,7 @@
     "tailwindcss": "^4.2.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
-    "vite": "^7.2.4"
+    "vite": "^7.2.4",
+    "web-tree-sitter": "^0.26.9"
   }
 }

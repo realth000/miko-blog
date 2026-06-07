@@ -114,6 +114,9 @@ importers:
       vite:
         specifier: ^7.2.4
         version: 7.3.1(@types/node@25.9.1)(jiti@2.6.1)(lightningcss@1.31.1)
+      web-tree-sitter:
+        specifier: ^0.26.9
+        version: 0.26.9
 
 packages:
 
@@ -2630,6 +2633,9 @@ packages:
         optional: true
       yaml:
         optional: true
+
+  web-tree-sitter@0.26.9:
+    resolution: {integrity: sha512-YJwSHANl6XFgeEjB8nitgj0qZYt5gkIesJ4w2srS2wcLB4GUa4xcOkM0YaMsU6WNR53YVIkDSY7Ej4pf3IXtCA==}
 
   which-boxed-primitive@1.1.1:
     resolution: {integrity: sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==}
@@ -5667,6 +5673,8 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.6.1
       lightningcss: 1.31.1
+
+  web-tree-sitter@0.26.9: {}
 
   which-boxed-primitive@1.1.1:
     dependencies:

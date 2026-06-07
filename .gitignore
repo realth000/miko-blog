@@ -5,6 +5,8 @@
 !/src/values/*.example.ts
 /src/values/*.mdx
 !/src/values/*.example.mdx
+scripts/highlighter/wasm
+!scripts/highlighter/wasm/.gitkeep
 
 # Website logo
 /src/assets/logo.png
