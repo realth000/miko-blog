@@ -8,6 +8,13 @@ function log(...message: unknown[]) {
   __log('[download.ts]', ...message)
 }
 
+const overridedDownloadUrls = new Map<string, string>([
+  [
+    'dart',
+    'https://raw.githubusercontent.com/UserNobody14/tree-sitter-dart/refs/heads/master/tree-sitter-dart.wasm',
+  ],
+])
+
 export async function downloadParser(lang: string, saveDir: string) {
   if (!fs.existsSync(saveDir)) {
     fs.mkdirSync(saveDir)
@@ -18,9 +25,11 @@ export async function downloadParser(lang: string, saveDir: string) {
     return
   }
 
-  const resp = await fetch(
-    `https://github.com/tree-sitter/tree-sitter-${lang}/releases/latest/download/tree-sitter-${lang}.wasm`,
-  )
+  const downloadUrl =
+    overridedDownloadUrls.get(lang) ??
+    `https://github.com/tree-sitter/tree-sitter-${lang}/releases/latest/download/tree-sitter-${lang}.wasm`
+
+  const resp = await fetch(downloadUrl)
   if (!resp.ok || !resp.body) {
     throw new Error(
       `failed to download ${lang} wasm parser: code=${resp.status.toString()}`,

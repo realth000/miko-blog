@@ -83,3 +83,70 @@ divider:
 > Quoted block
 >
 > The quick brown fox jumps over the lazy dog
+
+---
+
+Code block highlight samples:
+
+```rust
+use foo::{bar};
+
+mod my_mod;
+
+macro_rules! my_macro {
+    ($i: literal) => {
+        println!("i={}", $i)
+    };
+}
+
+#[derive(Debug)]
+struct StructHere<'a> {
+    ref_str: &'a str,
+}
+
+pub trait MyTrait {
+    type Out;
+
+    fn use_the_type(i: u32);
+    fn use_it(&self) -> Option<bool>;
+
+    fn default_implemented_one(&self) -> Self::Out {
+        unimplemented!()
+    }
+}
+
+impl<'a> MyTrait for StructHere<'a> {
+    type Out = &'a str;
+
+    fn use_the_type(i: u32) {
+        println!("use the type: {i}")
+    }
+
+    fn use_it(&self) -> Option<u32> {
+        if self.ref_str.starts_with("foo") {
+            Some(100)
+        } else {
+            None
+        }
+    }
+}
+
+pub fn run_the_func() -> String {
+    let sh = StructHere::new("here is the ref str");
+    match sh.use_it() {
+        Some(v) if v >= 10 => println!("use_it true"),
+        Some(_) => println!("use_it value"),
+        None => println!("use_it none"),
+        _ => println!("use_it dont care"),
+    }
+
+    my_macro!(100);
+
+    sh.ref_str
+        .chars()
+        .filter(|ch| ch.is_alphabetic())
+        .map(|ch| ch.to_string())
+        .collect::<Vec<_>>()
+        .join(",")
+}
+```
