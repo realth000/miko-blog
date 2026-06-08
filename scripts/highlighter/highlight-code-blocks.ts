@@ -1,13 +1,12 @@
-import { readFileSync } from 'node:fs'
-import { log } from './log.ts'
-import { highlight } from '../highlighter/highlighter.ts'
+import { highlight } from './highlighter.ts'
+import { log } from '../shared/log.ts'
 
 interface CodeBlock {
   _kind: 'codeBlock'
   index: number
   lang: string | undefined
   data: string[]
-  highlighted: string[]
+  highlighted: string | undefined
 }
 
 interface Text {
@@ -31,8 +30,6 @@ type DocSegment = CodeBlock | Text
  */
 export async function highlightCodeBlocks(data: string): Promise<string> {
   // Here we highlight the supported code blocks in document `data`, and returns the highlighted content string.
-
-  const doc: string[] = []
 
   // Flag indicating in multiline code block or not.
   let inCodeBlock = false
@@ -68,7 +65,7 @@ export async function highlightCodeBlocks(data: string): Promise<string> {
           lang: lang,
           index: codeBlockCount,
           data: [],
-          highlighted: [],
+          highlighted: undefined,
         }
       } else {
         // Here we leaved a code block.
@@ -107,10 +104,6 @@ export async function highlightCodeBlocks(data: string): Promise<string> {
     currentSegment = undefined
   }
 
-  log(docSegments)
-
-  log('>>> processing highlighting')
-
   for (const [idx, seg] of docSegments.entries()) {
     if (seg._kind != 'codeBlock') {
       continue
@@ -119,7 +112,7 @@ export async function highlightCodeBlocks(data: string): Promise<string> {
     // Highlight the code block.
     if (seg.lang === undefined) {
       // Do not highlight it.
-      seg.highlighted = seg.data
+      seg.highlighted = undefined
     } else {
       try {
         const highlightResult = await highlight(seg.data.join('\n'), seg.lang)
@@ -127,7 +120,7 @@ export async function highlightCodeBlocks(data: string): Promise<string> {
           log(
             `empty highlight result for idx=${idx.toString()} code block, maybe the language is not supported`,
           )
-          seg.highlighted = seg.data
+          seg.highlighted = undefined
         } else {
           seg.highlighted = highlightResult
         }
@@ -138,10 +131,15 @@ export async function highlightCodeBlocks(data: string): Promise<string> {
   }
 
   log(docSegments)
+  const docs: string[] = []
 
-  return doc.join('\n')
+  for (const seg of docSegments) {
+    if (seg._kind === 'text') {
+      docs.push(seg.data.join('\n'))
+    } else {
+      docs.push(seg.highlighted ?? seg.data.join('\n'))
+    }
+  }
+
+  return docs.join('')
 }
-
-const data = readFileSync(process.argv[2], 'utf8')
-
-await highlightCodeBlocks(data)

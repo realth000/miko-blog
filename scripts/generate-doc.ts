@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { highlightCodeBlocks } from './highlighter/highlight-code-blocks.ts'
 import { escapeSingleQuote } from './shared/escape-string.ts'
 import { log, fatal, warn } from './shared/log.ts'
 import { parseMdxTableOfContent } from './shared/parse-mdx-toc.ts'
@@ -146,7 +147,11 @@ for (const [i, doc] of docs.entries()) {
       doc.docPath,
       allowJsInArticleTitles,
     )
-    fs.writeFileSync(path.join(docOutputDir, `${component}.mdx`), updatedDoc)
+    const highlightedDoc = await highlightCodeBlocks(updatedDoc)
+    fs.writeFileSync(
+      path.join(docOutputDir, `${component}.mdx`),
+      highlightedDoc,
+    )
 
     // const docPathTrimmed = doc.docPath.replace(/src[\\/]/, '')
 

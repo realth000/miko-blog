@@ -13,6 +13,18 @@ const overridedDownloadUrls = new Map<string, string>([
     'dart',
     'https://raw.githubusercontent.com/UserNobody14/tree-sitter-dart/refs/heads/master/tree-sitter-dart.wasm',
   ],
+  [
+    'cpp',
+    'https://github.com/tree-sitter/tree-sitter-cpp/releases/latest/download/tree-sitter-cpp.wasm',
+  ],
+  [
+    'toml',
+    'https://github.com/tree-sitter-grammars/tree-sitter-toml/releases/latest/download/tree-sitter-toml.wasm',
+  ],
+  [
+    'yaml',
+    'https://github.com/tree-sitter-grammars/tree-sitter-yaml/releases/latest/download/tree-sitter-yaml.wasm',
+  ],
 ])
 
 export async function downloadParser(lang: string, saveDir: string) {
@@ -32,7 +44,7 @@ export async function downloadParser(lang: string, saveDir: string) {
   const resp = await fetch(downloadUrl)
   if (!resp.ok || !resp.body) {
     throw new Error(
-      `failed to download ${lang} wasm parser: code=${resp.status.toString()}`,
+      `failed to download ${lang} wasm parser: code=${resp.status.toString()}; url=${downloadUrl}`,
     )
   }
 
