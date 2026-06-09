@@ -14,7 +14,10 @@ import type {
  * @returns
  */
 function safeHighlighedCode(code: string): string {
-  return code.replaceAll('\\`', '`')
+  // Ensured to be single byte.
+  // eslint-disable-next-line unicorn/prefer-code-point
+  const bytes = Uint8Array.from(atob(code), (m) => m.charCodeAt(0))
+  return new TextDecoder().decode(bytes)
 }
 
 function renderBlock(pieceType: SharedHighlightedCodePieceType): string {

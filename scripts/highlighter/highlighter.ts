@@ -37,7 +37,7 @@ export interface HighlightBlock {
  * @returns
  */
 export function safeHighlighedCode(code: string): string {
-  return code.replaceAll('`', '\\`')
+  return Buffer.from(code, 'utf8').toString('base64')
 }
 
 /**
