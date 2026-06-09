@@ -1,5 +1,6 @@
-import { highlight } from './highlighter.ts'
+import { highlight, safeHighlighedCode } from './highlighter.ts'
 import { log } from '../shared/log.ts'
+import type { SharedHighlightedCode } from '@shared/mdx-highlighted-code-blocks.ts'
 
 interface CodeBlock {
   _kind: 'codeBlock'
@@ -17,18 +18,15 @@ interface Text {
 type DocSegment = CodeBlock | Text
 
 /**
- * Parse table of contents from a given mdx file path.
+ * Highlight code block.
  *
- * Return a modified document for deeplinking that injected anchor ids used later when parsing as MDX components.
+ * Pass in the content of a code block, this function will recognize all code piece that can be highlighted and
+ * mark them with associated token type.
  *
- * e.g. for title '# Foo', the title in returned `doc` is something like `# Foo {anchor_id}`
- *   with appended anchor id. The anchor id is a hash string wrapped in js block so that when parsing MDX nodes,
- *   whe node is converted to plain hash text which will be recognized and removed from title.
- *
- * @param data Document contents to process on.
- * @returns table of contents and updated document text.
+ * @param code Code to highlight.
+ * @returns JSX code that contains highlight components with highlight configuration based on input `code`.
  */
-export async function highlightCodeBlocks(data: string): Promise<string> {
+export async function highlightCodeBlocks(code: string): Promise<string> {
   // Here we highlight the supported code blocks in document `data`, and returns the highlighted content string.
 
   // Flag indicating in multiline code block or not.
@@ -38,7 +36,7 @@ export async function highlightCodeBlocks(data: string): Promise<string> {
   let tmpBlocks: string[] = []
   const docSegments: DocSegment[] = []
 
-  for (const line of data.split('\n')) {
+  for (const line of code.split('\n')) {
     if (line.trim().startsWith('```')) {
       // Enter or leave a code block.
       inCodeBlock = !inCodeBlock
@@ -130,14 +128,25 @@ export async function highlightCodeBlocks(data: string): Promise<string> {
     }
   }
 
-  log(docSegments)
   const docs: string[] = []
 
   for (const seg of docSegments) {
     if (seg._kind === 'text') {
       docs.push(seg.data.join('\n'))
     } else {
-      docs.push(seg.highlighted ?? seg.data.join('\n'))
+      const code: SharedHighlightedCode[] = [
+        {
+          _kind: 'codeText',
+          data: seg.data.join('\n'),
+        },
+      ]
+      // Not highlighted, maybe language is not supported.
+      // Still we place the code in `HighlightedCode` to render it with styles close to
+      // regular known languages.
+      docs.push(
+        seg.highlighted ??
+          `<HighlightedCode code={String.raw\`${safeHighlighedCode(JSON.stringify(code))}\`}/>`,
+      )
     }
   }
 

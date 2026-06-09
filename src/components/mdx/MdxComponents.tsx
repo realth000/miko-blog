@@ -2,6 +2,7 @@ import { IconExternalLink, IconQuote } from '@tabler/icons-react'
 import React, { isValidElement, type ReactElement, type ReactNode } from 'react'
 import CodeBlock from './CodeBlock'
 import Heading from './Heading'
+import HighlightedCode from './HighlightedCode'
 import type { MDXComponents } from 'mdx/types.js'
 
 function isTag(n: string, child: ReactElement): boolean {
@@ -284,4 +285,7 @@ export const MDX_COMPONENTS: MDXComponents = {
       </a>
     )
   },
+  HighlightedCode: ({ lang, code, ...props }) => (
+    <HighlightedCode lang={lang as unknown} code={code as unknown} {...props} />
+  ),
 } as const

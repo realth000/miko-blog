@@ -205,7 +205,10 @@ for (const [i, doc] of docs.entries()) {
   }
 }
 
-log('generate article dynamic routes:', dynamicRoutes)
+log(
+  'generate article dynamic routes:',
+  dynamicRoutes.map((route) => route.path),
+)
 const articleTemplateRouteString = fs.readFileSync(
   './src/pages/article-dynamic-route.template.ts',
   'utf8',
@@ -283,6 +286,8 @@ if (fs.existsSync(aboutMeDocFile)) {
   )
   throw new Error('unreachable; To make the compiler happy.')
 }
+
+aboutMeContent.doc = await highlightCodeBlocks(aboutMeContent.doc)
 
 fs.writeFileSync(path.join(docOutputDir, 'about.mdx'), aboutMeContent.doc)
 

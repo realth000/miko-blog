@@ -44,6 +44,7 @@ function CopyButton({ codeBlockId }: { codeBlockId: string }) {
                 `code.${codeBlockId}`,
               )?.textContent
               if (code === undefined) {
+                log('failed to copy: code is undefined')
                 return
               }
 

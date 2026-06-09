@@ -89,6 +89,9 @@ divider:
 Code block highlight samples:
 
 ```rust
+//! Hello I am library level doc comment.
+//!
+//! I am multiline.
 use foo::{bar};
 
 mod my_mod;
@@ -99,8 +102,10 @@ macro_rules! my_macro {
     };
 }
 
+/// I am symbol level doc comment.
 #[derive(Debug)]
 struct StructHere<'a> {
+    /// Doc comment on field.
     ref_str: &'a str,
 }
 
@@ -131,6 +136,9 @@ impl<'a> MyTrait for StructHere<'a> {
     }
 }
 
+/*
+ * Normal multiline comment
+ */
 pub fn run_the_func() -> String {
     let sh = StructHere::new("here is the ref str");
     match sh.use_it() {
@@ -139,6 +147,10 @@ pub fn run_the_func() -> String {
         None => println!("use_it none"),
         _ => println!("use_it dont care"),
     }
+
+    let i = 2 / 1;
+
+    // Plain comment.
 
     my_macro!(100);
 
