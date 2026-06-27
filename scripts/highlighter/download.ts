@@ -10,8 +10,12 @@ function log(...message: unknown[]) {
 
 const overridedDownloadUrls = new Map<string, string>([
   [
+    'cmake',
+    'https://raw.githubusercontent.com/realth000/TreeSitterWasmArtifacts/refs/heads/master/parser/tree-sitter-cmake.wasm',
+  ],
+  [
     'dart',
-    'https://raw.githubusercontent.com/UserNobody14/tree-sitter-dart/refs/heads/master/tree-sitter-dart.wasm',
+    'https://raw.githubusercontent.com/realth000/TreeSitterWasmArtifacts/refs/heads/master/parser/tree-sitter-dart.wasm',
   ],
   [
     'cpp',
