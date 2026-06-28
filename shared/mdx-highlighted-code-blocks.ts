@@ -1,5 +1,7 @@
 export type SharedHighlightedCodePieceType =
   | 'identifier'
+  | 'operator'
+  | 'field'
   | 'type'
   | 'function'
   | 'primitiveType'

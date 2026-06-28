@@ -23,28 +23,33 @@ function safeHighlighedCode(code: string): string {
 function renderBlock(pieceType: SharedHighlightedCodePieceType): string {
   switch (pieceType) {
     case 'identifier': {
-      return 'text-amber-700 dark:text-amber-400'
+      return 'text-slate-600 dark:text-cyan-100'
     }
-    case 'type': {
-      return 'text-indigo-700 dark:text-indigo-400'
+    case 'operator': {
+      // return 'text-blue-600 dark:text-blue-400'
+      return ''
     }
-    case 'function': {
+    case 'field': {
       return 'text-rose-700 dark:text-rose-400'
     }
-    case 'primitiveType': {
-      return 'text-purple-700 dark:text-purple-400'
-    }
     case 'keyword': {
-      return 'text-pink-700 dark:text-pink-400'
+      return 'text-sky-600 dark:text-sky-400'
     }
-    case 'literal': {
-      return 'text-cyan-700 dark:text-cyan-400'
+    case 'function': {
+      return 'text-indigo-600 dark:text-indigo-400'
+    }
+    case 'type':
+    case 'primitiveType': {
+      return 'text-amber-600 dark:text-amber-400'
     }
     case 'literalString': {
-      return 'text-emerald-700 dark:text-emerald-400'
+      return 'text-emerald-600 dark:text-emerald-400'
+    }
+    case 'literal': {
+      return 'text-purple-600 dark:text-purple-400'
     }
     case 'comment': {
-      return 'text-gray-700 dark:text-gray-400'
+      return 'text-slate-400 dark:text-slate-400'
     }
     case 'unknown': {
       return ''

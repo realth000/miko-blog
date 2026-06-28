@@ -86,7 +86,249 @@ divider:
 
 ---
 
-Code block highlight samples:
+## Code highlighting
+
+### bash
+
+```bash
+#!/usr/bin/env bash
+
+# Comment.
+# Highlighting.
+
+function do_foo_action() {
+    local foo_key
+    local bar_value
+
+    foo_key="raw_string_value_alpha"
+    bar_value='raw_string_beta'
+
+    if [[ -n "$foo_key" && "$1" > "0" ]]; then
+        print_foo_meta --verbose -c 42 2> /dev/null
+    else
+        echo "warning_msg" 1>> /dev/null
+    fi
+}
+
+for item in ${MY_ABSTRACT_LIST[@]}; do
+    local foo_res=$(echo "$item" | grep "trigger")
+
+    case "$foo_res" in
+        "alpha")
+            cat << 'EOF'
+            This is an abstract heredoc_body piece.
+            It contains foo and bar data lines.
+EOF
+            ;;
+        beta*)
+            echo "hello world"
+            ;;
+        *)
+            unset foo_res
+            ;;
+    esac
+done
+
+export MY_GLOBAL_META_VAR="delta_init"
+
+do_foo_action 1
+```
+
+### c
+
+```c
+#include <stdio.h>
+
+#ifndef FOO
+#define FOO
+#endif
+
+#ifdef FOO
+#define BAR
+#endif
+
+#if defined(FOO)
+#define BAZ
+#endif
+
+typedef struct {
+    int bar;
+} Foo;
+
+int main(int argc, char **argv) {
+    Foo foo = { .bar = 100 };
+    printf("foo.bar=%d\n", foo.bar);
+    return 0;
+}
+```
+
+Another c
+
+```c
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MY_MACRO_CONSTANT 1024
+
+/**
+ * My defined type
+ */
+typedef unsigned long MyCustomAlphaType;
+
+struct MyStructAlpha {
+    MyCustomAlphaType alpha_id;
+    char* alpha_value;
+    bool is_foo_enabled;
+};
+
+// Test function
+struct MyStructAlpha* do_foo_action(MyCustomAlphaType id, const char* name) {
+    if (name == NULL || id >= MY_MACRO_CONSTANT) {
+        return NULL;
+    }
+
+    /* Multiline comment in one line */
+    struct MyStructAlpha* foo_ptr = malloc(sizeof(struct MyStructAlpha));
+
+    foo_ptr->alpha_id = id;
+    foo_ptr->alpha_value = "raw_string_value_beta";
+    foo_ptr->is_foo_enabled = true;
+
+    return foo_ptr;
+}
+
+int main() {
+    struct MyStructAlpha* my_instance = do_foo_action(42, "dummy_name");
+    if (my_instance != NULL) {
+        printf("ID: %ld, Val: %s\n", my_instance->alpha_id, my_instance->alpha_value);
+    }
+    return 0;
+}
+```
+
+### cpp
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <memory>
+
+namespace MyCustomNamespace {
+
+/**
+ * My defined type
+ */
+using MyContainerType = std::vector<std::string>;
+
+template <typename T>
+class MyClassTemplate {
+private:
+    // Some field here.
+    std::string internal_foo_str;
+    int bar_counter;
+
+public:
+    // Constructor.
+    explicit MyClassTemplate(std::string initial_val)
+        : internal_foo_str(initial_val), bar_counter(0) {}
+
+    void execute_gamma_process(const MyContainerType& data_list) {
+        for (const auto& item : data_list) {
+            if (item.empty()) {
+                continue;
+            }
+            this->bar_counter += 1;
+        }
+    }
+
+    void print_debug_meta() const {
+        std::cout << "Meta: " << internal_foo_str
+                  << ", Count: " << bar_counter << std::endl;
+    }
+};
+
+} // namespace MyCustomNamespace
+
+int main() {
+    // Using shared pointer.
+    auto my_executor = std::make_shared<MyCustomNamespace::MyClassTemplate>("init_delta");
+
+    MyCustomNamespace::MyContainerType mock_tokens = {"keyword_test", "operator_test", "", "literal_test"};
+
+    my_executor->execute_gamma_process(mock_tokens);
+    my_executor->print_debug_meta();
+
+    return 0;
+}
+```
+
+### dart
+
+```dart
+import 'dart:async';
+import 'path:path.dart' as path;
+
+/// My static variable.
+const int MY_MAX_LIMIT_CONSTANT = 1024;
+
+/*
+ * My custom type.
+ */
+typedef MyCustomGammaMapper = Map<String, MyClassAlpha>;
+
+class MyClassAlpha {
+  /// Doc comment here.
+  ///
+  /// Multiline comment.
+  final String fooInternalStr;
+  int barCounter;
+
+  String _p;
+
+  String get p => _p;
+  set p(String s) => _p = s;
+
+  MyClassAlpha(this.fooInternalStr) : barCounter = 0;
+
+  bool processDeltaTokens(List<String> rawItems) {
+    // Comment here.
+    for (final item in rawItems) {
+      if (item.isEmpty) {
+        continue;
+      }
+      this.barCounter += 1;
+    }
+    return this.barCounter > 0;
+  }
+}
+
+Future<MyClassAlpha?> executeFooFactory(String mockValue) async {
+  if (mockValue == 'invalid_trigger_omega') {
+    return null;
+  }
+  final fooInstance = MyClassAlpha(mockValue);
+  final mockData = <String>['test_item_alpha', 'test_item_beta', ''];
+  fooInstance.processDeltaTokens(mockData);
+  return fooInstance;
+}
+
+void main() async {
+  final MyClassAlpha? runner = await executeFooFactory('init_meta_string');
+
+  if (runner != null) {
+    print('Counter: ${runner.barCounter}, Str: ${runner.fooInternalStr}');
+  }
+
+  foo
+    ..bar=2
+    ..baz=3;
+
+  path.existsSync('/some/path');
+}
+```
+
+### rust
 
 ```rust
 //! Hello I am library level doc comment.

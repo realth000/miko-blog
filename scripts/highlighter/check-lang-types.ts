@@ -2,18 +2,24 @@ import fs from 'node:fs'
 import { exit } from 'node:process'
 import { Language, Parser } from 'web-tree-sitter'
 import { downloadParser } from './download.ts'
-import { getLangWasmFilePath, langNames, wasmDir } from './languages.ts'
+import {
+  getLangWasmFilePath,
+  langConfigFromLangName,
+  wasmDir,
+} from './languages.ts'
 import { log } from '../shared/log.ts'
 
 async function printLangTypes(lang: string) {
   await Parser.init()
 
-  if (!langNames.has(lang)) {
+  const langConfig = langConfigFromLangName(lang)
+
+  if (!langConfig) {
     log(`unsupported lang ${lang}`)
     exit(1)
   }
 
-  const wasmFilePath = getLangWasmFilePath(lang)
+  const wasmFilePath = getLangWasmFilePath(langConfig)
   if (!fs.existsSync(wasmFilePath)) {
     log(`wasm file for lang ${lang} not exists, now downloading...`)
     try {

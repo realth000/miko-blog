@@ -3,12 +3,12 @@ import { exit } from 'node:process'
 import { Language, Node, Parser, Tree } from 'web-tree-sitter'
 import { downloadParser } from './download.ts'
 import {
-  langNames,
   getLangWasmFilePath,
+  langConfigFromLangName,
   wasmDir,
-  isLangKeyword,
 } from './languages.ts'
 import { log as __log } from '../shared/log.ts'
+import type { LanguageConfig } from './languages/language-config.ts'
 import type {
   SharedHighlightedCode,
   SharedHighlightedCodePieceType,
@@ -26,6 +26,7 @@ export interface HighlightBlock {
   isNamed: boolean
   isVisible: boolean
   text: string
+  parentType: string | undefined
 }
 
 /**
@@ -56,18 +57,18 @@ export async function highlight(
   await Parser.init()
   const parser = new Parser()
 
-  const canonicalizeLang = langNames.get(lang)
+  const langConfig = langConfigFromLangName(lang)
 
-  if (!canonicalizeLang) {
+  if (!langConfig) {
     log(`warning: ${lang} is not supported, fallback to plain text`)
     return undefined
   }
 
-  const wasmFilePath = getLangWasmFilePath(canonicalizeLang)
+  const wasmFilePath = getLangWasmFilePath(langConfig)
   if (!fs.existsSync(wasmFilePath)) {
     log(`wasm file for lang ${lang} not exists, now downloading...`)
     try {
-      await downloadParser(canonicalizeLang, wasmDir)
+      await downloadParser(langConfig.name, wasmDir)
     } catch (error) {
       log(`failed to download wasm file for lang ${lang}:`, error)
       exit(1)
@@ -84,9 +85,9 @@ export async function highlight(
 
   const blocks: HighlightBlock[] = []
 
-  function traverseTree(tree: Tree) {
+  function traverseTree(tree: Tree, langConfig: LanguageConfig) {
     function visitNode(node: Node) {
-      if (node.childCount == 0) {
+      if (langConfig.nodeTypeMap.has(node.type)) {
         blocks.push({
           startIndex: node.startIndex,
           endIndex: node.endIndex,
@@ -95,20 +96,20 @@ export async function highlight(
           isNamed: node.isNamed,
           isVisible: node.isNamed,
           text: node.text,
+          parentType: node.parent?.type,
         })
-      }
-
-      for (const child of node.children) {
-        visitNode(child)
+      } else {
+        for (const child of node.children) {
+          visitNode(child)
+        }
       }
     }
 
     visitNode(tree.rootNode)
   }
 
-  traverseTree(tree)
-
-  return applyhighlightToCode(code, blocks, lang)
+  traverseTree(tree, langConfig)
+  return applyhighlightToCode(code, blocks, lang, langConfig)
 }
 
 /**
@@ -123,6 +124,7 @@ function applyhighlightToCode(
   code: string,
   highlightBlocks: HighlightBlock[],
   lang: string,
+  langConfig: LanguageConfig,
 ): string {
   if (code.length === 0 || highlightBlocks.length === 0) {
     return code
@@ -156,80 +158,10 @@ function applyhighlightToCode(
 
     const content = code.slice(currentBlock.startIndex, currentBlock.endIndex)
 
-    const contentPieceType = detectCodePieceType(currentBlock, lang, content)
-    if (contentPieceType == 'comment') {
-      // Enter comment state, here we read all the contents in comment.
-      if (currentBlock.nodeType === '/*') {
-        // Multiline comment, eat until the corresponding end token.
-        //
-        // Currently we only handle multiline comment style `/* */`
-        // Perhaps it's time to do a per language highlighting process.
-        const endWith = '*/'
-        const commentStartPos = codePos
-        while (blockPos < highlightBlocks.length) {
-          currentBlock = highlightBlocks[blockPos]
-          if (currentBlock.nodeType == endWith) {
-            break
-          }
-          blockPos += 1
-        }
-        const comment = code.slice(commentStartPos, currentBlock.endIndex)
-        buffer.push({
-          _kind: 'codePiece',
-          pieceType: 'comment',
-          data: comment,
-        })
-
-        // Reset state.
-        codePos = currentBlock.endIndex
-        blockPos += 1
-
-        if (blockPos < highlightBlocks.length) {
-          currentBlock = highlightBlocks[blockPos]
-        }
-
-        continue
-      } else {
-        // Single line comment, eat until '\n'
-        const commentStartPos = codePos
-        while (codePos < code.length) {
-          if (code.at(codePos) == '\n' && codePos >= currentBlock.endIndex) {
-            break
-          }
-          codePos += 1
-        }
-        const comment = code.slice(commentStartPos, codePos + 1)
-        buffer.push({
-          _kind: 'codePiece',
-          pieceType: 'comment',
-          data: comment,
-        })
-
-        // Reset state.
-        codePos += 1
-        // Because we search '\n' in plain text, we may already go through multiple highlight blocks.
-        //
-        // e.g. In rust: `//! hello\n` is parsed into ["//", "!", " hello\n"], where "!" should be skipped.
-        while (blockPos < highlightBlocks.length) {
-          currentBlock = highlightBlocks[blockPos]
-          if (currentBlock.startIndex < codePos) {
-            blockPos += 1
-          } else {
-            break
-          }
-        }
-
-        if (blockPos < highlightBlocks.length) {
-          currentBlock = highlightBlocks[blockPos]
-        }
-
-        continue
-      }
-    }
-
+    const contentPieceType = mapPieceType(currentBlock, langConfig)
     buffer.push({
       _kind: 'codePiece',
-      pieceType: detectCodePieceType(currentBlock, lang, content),
+      pieceType: contentPieceType,
       data: content,
     })
 
@@ -245,67 +177,31 @@ function applyhighlightToCode(
 }
 
 /**
- * Find the corresponding type to render for a given highlight code block
+ * Map tree-sitter token type to highlightable type.
  *
- * TODO: Now we are mixing all types of languages in one function, if we support more languages in the future,
- * it's hard to check the syntax token for a specified language where some mis-detection will finally happen.
- * But now it is ok.
- *
- * @param block The code piece to check type
- * @param lang Language
- * @param content Code piece text
- * @returns Token type to render
+ * @param block Code block to highlight.
+ * @param langConfig Current language config.
+ * @returns The highlight type to use.
  */
-function detectCodePieceType(
+function mapPieceType(
   block: HighlightBlock,
-  lang: string,
-  content: string,
+  langConfig: LanguageConfig,
 ): SharedHighlightedCodePieceType {
-  if (isLangKeyword(lang, content)) {
-    return 'keyword'
+  const mappedType = langConfig.nodeTypeMap.get(block.nodeType)
+  if (mappedType === undefined) {
+    return 'unknown'
   }
 
-  switch (block.nodeType) {
-    // bash
-    case 'file_descriptor': {
-      return 'keyword'
-    }
-    // bash
-    case 'variable_name':
-    case 'identifier': {
-      return 'identifier'
-    }
-    case 'primitive_type': {
-      return 'primitiveType'
-    }
-    case 'string_content': {
-      return 'literalString'
-    }
-    // bash
-    case 'raw_string':
-    case 'integer_literal':
-    case 'number':
-    case 'literal': {
-      return 'literal'
-    }
-    case '"': {
-      return 'literalString'
-    }
-    case 'field_identifier': {
-      return 'function'
-    }
-    case 'type_identifier': {
-      return 'type'
-    }
-    case '*/':
-    case '/*':
-    case '//':
-    case 'comment':
-    case 'doc_comment': {
-      return 'comment'
-    }
-    default: {
+  if (mappedType === 'operator') {
+    const parentNodeType = block.parentType
+    if (
+      parentNodeType !== undefined &&
+      langConfig.genericNodeNames.includes(parentNodeType)
+    ) {
+      // Generic type.
       return 'unknown'
     }
   }
+
+  return mappedType
 }
