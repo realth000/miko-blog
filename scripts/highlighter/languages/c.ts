@@ -70,4 +70,5 @@ export const cConfig: LanguageConfig = {
     ['field_designator', 'field'],
   ]),
   genericNodeNames: [],
+  extraKeywords: [],
 }

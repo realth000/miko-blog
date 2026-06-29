@@ -2,6 +2,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { bashConfig } from './languages/bash.ts'
 import { cConfig } from './languages/c.ts'
+import { cmakeConfig } from './languages/cmake.ts'
 import { cppConfig } from './languages/cpp.ts'
 import { dartConfig } from './languages/dart.ts'
 import { rustConfig } from './languages/rust.ts'
@@ -10,6 +11,7 @@ import type { LanguageConfig } from './languages/language-config'
 const languages: LanguageConfig[] = [
   bashConfig,
   cConfig,
+  cmakeConfig,
   cppConfig,
   dartConfig,
   rustConfig,

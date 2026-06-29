@@ -99,8 +99,22 @@ export async function highlight(
           parentType: node.parent?.type,
         })
       } else {
-        for (const child of node.children) {
-          visitNode(child)
+        if (node.childCount > 0) {
+          for (const child of node.children) {
+            visitNode(child)
+          }
+        } else {
+          // For fallback to extraKeywords, we should keep the block.
+          blocks.push({
+            startIndex: node.startIndex,
+            endIndex: node.endIndex,
+            nodeType: node.type,
+            nodeTypeId: node.typeId,
+            isNamed: node.isNamed,
+            isVisible: node.isNamed,
+            text: node.text,
+            parentType: node.parent?.type,
+          })
         }
       }
     }
@@ -188,7 +202,13 @@ function mapPieceType(
   langConfig: LanguageConfig,
 ): SharedHighlightedCodePieceType {
   const mappedType = langConfig.nodeTypeMap.get(block.nodeType)
-  if (mappedType === undefined) {
+  if (!mappedType) {
+    // Fallback to extra keyword.
+    const ek = langConfig.extraKeywords.includes(block.text)
+    if (ek) {
+      return 'keyword'
+    }
+
     return 'unknown'
   }
 

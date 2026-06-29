@@ -172,4 +172,5 @@ export const cppConfig: LanguageConfig = {
     ['namespace_identifier', 'type'],
   ]),
   genericNodeNames: ['template_argument_list', 'template_parameter_list'],
+  extraKeywords: [],
 }

@@ -117,4 +117,5 @@ export const rustConfig: LanguageConfig = {
     ['visibility_modifier', 'keyword'],
   ]),
   genericNodeNames: ['type_arguments', 'type_parameters'],
+  extraKeywords: [],
 }

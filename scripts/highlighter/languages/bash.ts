@@ -60,4 +60,5 @@ export const bashConfig: LanguageConfig = {
     ['word', 'identifier'],
   ]),
   genericNodeNames: [],
+  extraKeywords: [],
 }

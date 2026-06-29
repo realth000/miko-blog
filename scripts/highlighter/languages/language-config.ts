@@ -62,4 +62,14 @@ export interface LanguageConfig {
    * Different languages may use different node names.
    */
   genericNodeNames: string[]
+
+  /**
+   * Some language parsers do not gracefully handle all keywords, that is, a keyword is recognized as
+   * other token. Use this field when token not matches but the content text is keyword then give it
+   * a keyword highlight.
+   *
+   * Note that in the future version we have use optional callbacks to patch on parsed tokens instead
+   * of hard-coding text replacement.
+   */
+  extraKeywords: string[]
 }

@@ -97,4 +97,5 @@ export const dartConfig: LanguageConfig = {
     ['type', 'type'],
   ]),
   genericNodeNames: ['type_parameter'],
+  extraKeywords: [],
 }
