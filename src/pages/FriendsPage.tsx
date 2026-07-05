@@ -14,9 +14,15 @@ function _FriendsPage(friend: MikoFriends, id: number) {
         <h3 className="text-on-surface group-hover:text-primary mb-2 text-2xl font-bold">
           {friend.site_name}
         </h3>
-        <div className="text-on-surface-variant mb-2 text-lg">
-          {friend.description}
-        </div>
+        {friend.description ? (
+          <div className="text-on-surface-variant text-md mb-2">
+            {friend.description}
+          </div>
+        ) : (
+          <div className="text-on-surface-variant text-md mb-2 underline">
+            {friend.url}
+          </div>
+        )}
       </a>
     </div>
   )

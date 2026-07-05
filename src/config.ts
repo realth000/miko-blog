@@ -81,7 +81,7 @@ export interface MikoFriends {
   /**
    * Website description.
    */
-  description: string
+  description: string | undefined
 
   /**
    * Website url.
