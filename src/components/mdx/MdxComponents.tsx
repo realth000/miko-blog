@@ -1,6 +1,7 @@
 import { IconExternalLink, IconQuote } from '@tabler/icons-react'
 import React, { isValidElement, type ReactElement, type ReactNode } from 'react'
 import CodeBlock from './CodeBlock'
+import Expandable from './Expandable'
 import Heading from './Heading'
 import HighlightedCode from './HighlightedCode'
 import type { MDXComponents } from 'mdx/types.js'
@@ -288,4 +289,14 @@ export const MDX_COMPONENTS: MDXComponents = {
   HighlightedCode: ({ lang, code, ...props }) => (
     <HighlightedCode lang={lang as unknown} code={code as unknown} {...props} />
   ),
+  Expandable: ({ summary, collapse, children, ...props }) => {
+    return (
+      <Expandable
+        summary={typeof summary === 'string' ? summary : undefined}
+        collapse={typeof collapse === 'boolean' ? collapse : true}
+        children={children as ReactNode}
+        {...props}
+      />
+    )
+  },
 } as const

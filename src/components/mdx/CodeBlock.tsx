@@ -92,7 +92,7 @@ export default function CodeBlock({
                 {tr.title(lang)}
               </div>
               {lang !== undefined && lang.length > 0 && (
-                <div className="bg-secondary-container text-secondary rounded px-1.5 py-0.5 text-[10px] font-bold tracking-wider uppercase">
+                <div className="bg-secondary-container text-secondary rounded px-1.5 py-0.5 text-sm uppercase">
                   {lang}
                 </div>
               )}
