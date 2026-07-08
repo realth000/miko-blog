@@ -15,7 +15,7 @@ export default function Expandable({
   const outer = summary
 
   const [collapsed, setCollapsed] = useState(collapse)
-  const [flashRefreshKey, setFlashCount] = useState(true)
+  const [flashRefreshKey, setFlashRefreshKey] = useState(true)
 
   return (
     <div {...props}>
@@ -23,7 +23,9 @@ export default function Expandable({
         className={`text-on-surface-variant bg-surface-container-low hover:bg-surface-container-high my-article-paragraph rounded-t-xl py-2 pl-4 ${collapsed ? 'my-article-paragraph rounded-b-xl' : 'mb-0.5 rounded-b-sm'}`}
         onClick={() => {
           setCollapsed(!collapsed)
-          setFlashCount((prev) => !prev)
+          if (!collapsed) {
+            setFlashRefreshKey((prev) => !prev)
+          }
         }}
       >
         <div className="mr-auto ml-0 flex items-start gap-2">
