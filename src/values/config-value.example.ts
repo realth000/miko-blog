@@ -3,6 +3,7 @@ import { defineConfig } from '../config'
 
 export default defineConfig({
   siteName: 'My Site Name',
+  githubUsername: 'realth000',
   slogan: 'Hello World!',
   friends: [
     {
@@ -13,7 +14,7 @@ export default defineConfig({
     {
       site_name: 'Bob',
       url: 'https://github.com',
-      description: 'Bob called Alice',
+      description: undefined,
     },
   ],
   friendsInviteUrl: 'https://github.com',
@@ -31,6 +32,7 @@ export default defineConfig({
       tags: ['project', 'blog'],
     },
   ],
-  aboutMeDocumentPath: 'TODO',
-  documentsDir: 'TODO',
+  aboutMeDocumentPath: '/* This config is not used yet */',
+  documentsDir: '/* This config is not used yet */',
+  sourceCodeUrl: 'https://github.com/realth000/miko-blog',
 })

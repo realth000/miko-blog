@@ -8,6 +8,22 @@ export interface MikoConfig {
   siteName: string
 
   /**
+   * GitHub username.
+   *
+   * Displayed in the website footer.
+   */
+  githubUsername: string | undefined
+
+  /**
+   * Website source code.
+   *
+   * Generally is the GitHub repository url.
+   *
+   * Displayed in the website footer.
+   */
+  sourceCodeUrl: string | undefined
+
+  /**
    * The headline to show in homepage.
    */
   slogan: string

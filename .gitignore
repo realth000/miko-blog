@@ -1,5 +1,6 @@
-/src/contents
-/src/pages/generated
+/src/contents/*
+!/src/contents/.gitkeep
+/src/pages/generated/*
 !/src/pages/generated/.gitkeep
 /src/values/*.ts
 !/src/values/*.example.ts
