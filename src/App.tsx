@@ -50,8 +50,7 @@ export default function App() {
   const [page, setPage] = useState<PageInfo>(homePageTarget)
 
   const systemPrefersDark = useIsSystemDarkTheme()
-  const storedTheme =
-    localStorage.getItem('theme') ?? (systemPrefersDark ? 'dark' : 'light')
+  const storedTheme = localStorage.getItem('theme') ?? 'system'
   const initialTheme: ColorScheme =
     storedTheme === 'dark'
       ? 'dark'
