@@ -13,6 +13,7 @@ scripts/highlighter/wasm
 /src/assets/logo.png
 # Favicon
 /public/logo.svg
+/public/logo-dark.svg
 
 # Logs
 logs
