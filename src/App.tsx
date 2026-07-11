@@ -4,8 +4,11 @@ import {
   useEffectEvent,
   useRef,
   useState,
+  type ReactNode,
 } from 'react'
 import { findRoute, homePageTarget, notFoundPageTarget } from '@/router/router'
+import { useIsDarkTheme } from './hooks/use-is-dark-theme'
+import { useIsSystemDarkTheme } from './hooks/use-is-system-dark-theme'
 import { setupI18n } from './i18n/i18n-context'
 import { log } from './log'
 import ThemeContext, { type ColorScheme } from './providers/theme-context'
@@ -29,14 +32,26 @@ function splitHashAndAnchor(data: string): {
     : { hash: data.slice(0, s), anchor: data.slice(s + 1) }
 }
 
+function FaviconWrapper({ children }: { children?: ReactNode }) {
+  const isDarkTheme = useIsDarkTheme()
+
+  useEffect(() => {
+    const favIconLinkRaw = globalThis.document.querySelector('link[rel="icon"]')
+    if (favIconLinkRaw) {
+      const favIconLink = favIconLinkRaw as HTMLLinkElement
+      favIconLink.href = isDarkTheme ? '/logo-dark.svg' : '/logo.svg'
+    }
+  }, [isDarkTheme])
+
+  return children
+}
+
 export default function App() {
   const [page, setPage] = useState<PageInfo>(homePageTarget)
 
-  const preferDark = globalThis.window.matchMedia(
-    '(prefers-color-scheme: dark)',
-  ).matches
+  const systemPrefersDark = useIsSystemDarkTheme()
   const storedTheme =
-    localStorage.getItem('theme') ?? (preferDark ? 'dark' : 'light')
+    localStorage.getItem('theme') ?? (systemPrefersDark ? 'dark' : 'light')
   const initialTheme: ColorScheme =
     storedTheme === 'dark'
       ? 'dark'
@@ -190,10 +205,10 @@ export default function App() {
 
   useEffect(() => {
     const inDark =
-      theme === 'system' ? (preferDark ? true : false) : theme === 'dark'
+      theme === 'system' ? (systemPrefersDark ? true : false) : theme === 'dark'
     document.documentElement.classList.toggle('dark', inDark)
     localStorage.setItem('theme', theme)
-  }, [theme, preferDark])
+  }, [theme, systemPrefersDark])
 
   useEffect(() => {
     onAppFirstInit()
@@ -202,6 +217,7 @@ export default function App() {
   return (
     <>
       <ThemeContext.Provider value={{ theme, setTheme }}>
+        <FaviconWrapper />
         {createElement(page.component)}
       </ThemeContext.Provider>
     </>
