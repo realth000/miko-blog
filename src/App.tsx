@@ -39,7 +39,7 @@ function FaviconWrapper({ children }: { children?: ReactNode }) {
     const favIconLinkRaw = globalThis.document.querySelector('link[rel="icon"]')
     if (favIconLinkRaw) {
       const favIconLink = favIconLinkRaw as HTMLLinkElement
-      favIconLink.href = isDarkTheme ? '/logo-dark.svg' : '/logo.svg'
+      favIconLink.href = isDarkTheme ? './logo-dark.svg' : './logo.svg'
     }
   }, [isDarkTheme])
 

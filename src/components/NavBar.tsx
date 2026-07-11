@@ -42,7 +42,7 @@ export default function NavBar() {
             className="text-on-surface hover:text-primary flex items-center gap-2 text-xl font-bold"
           >
             <img
-              src={isDarkTheme ? '/logo-dark.svg' : '/logo.svg'}
+              src={isDarkTheme ? './logo-dark.svg' : './logo.svg'}
               alt="logo"
               className="h-8 w-8"
             ></img>
